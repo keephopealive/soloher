@@ -53,7 +53,7 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
         <div style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(13,13,13,0.97)',
+          background: 'rgba(46,18,32,0.98)',
           zIndex: 99,
           display: 'flex',
           flexDirection: 'column',

@@ -1,18 +1,32 @@
 /* ─── Variables ─── */
 :root {
-  --bg: #0D0D0D;
-  --bg-2: #111111;
-  --bg-card: #161616;
-  --bg-card-hover: #1C1C1C;
+  /* Backgrounds — warm plum/wine, notably lighter than the old near-black */
+  --bg: #2E1220;
+  --bg-2: #381728;
+  --bg-card: #42202E;
+  --bg-card-hover: #4E2838;
+
+  /* Rose/blush — primary feminine accent */
+  --rose: #D4A0B5;
+  --rose-bright: #ECCDD9;
+  --rose-dark: #A86882;
+  --rose-faint: rgba(212, 160, 181, 0.13);
+
+  /* Gold — kept for CTAs and conversion elements */
   --gold: #C9A96E;
   --gold-bright: #E2C48A;
   --gold-dark: #9B7B45;
   --gold-faint: rgba(201, 169, 110, 0.12);
-  --ivory: #F7F3EE;
-  --ivory-dim: rgba(247, 243, 238, 0.55);
-  --ivory-faint: rgba(247, 243, 238, 0.22);
-  --border: rgba(201, 169, 110, 0.18);
-  --border-hover: rgba(201, 169, 110, 0.55);
+
+  /* Text */
+  --ivory: #FBF0F5;
+  --ivory-dim: rgba(251, 240, 245, 0.58);
+  --ivory-faint: rgba(251, 240, 245, 0.24);
+
+  /* Borders — rose-tinted */
+  --border: rgba(212, 160, 181, 0.20);
+  --border-hover: rgba(212, 160, 181, 0.55);
+
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
   --max-w: 1160px;
@@ -154,17 +168,19 @@ h1, h2, h3, h4 {
   transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.3s ease;
 }
 .navbar.scrolled {
-  background: rgba(13, 13, 13, 0.9);
+  background: rgba(46, 18, 32, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 18px 48px;
   border-bottom: 1px solid var(--border);
 }
 .navbar-logo {
-  height: 40px;
+  height: 34px;
   width: auto;
   object-fit: contain;
-  filter: url(#logo-no-white);
+  background: rgba(255, 255, 255, 0.96);
+  padding: 5px 14px;
+  border-radius: 3px;
 }
 .navbar-logo-text {
   font-family: var(--font-serif);
@@ -239,18 +255,18 @@ h1, h2, h3, h4 {
   position: absolute;
   top: -10%;
   right: -5%;
-  width: 55%;
-  height: 85%;
-  background: radial-gradient(ellipse at 70% 30%, rgba(201, 169, 110, 0.07) 0%, transparent 65%);
+  width: 60%;
+  height: 90%;
+  background: radial-gradient(ellipse at 65% 35%, rgba(212, 140, 175, 0.18) 0%, rgba(180, 80, 130, 0.06) 50%, transparent 70%);
 }
 .hero-bg-glow::after {
   content: '';
   position: absolute;
-  bottom: 5%;
+  bottom: 0%;
   left: -8%;
-  width: 45%;
-  height: 55%;
-  background: radial-gradient(ellipse, rgba(201, 169, 110, 0.04) 0%, transparent 65%);
+  width: 50%;
+  height: 60%;
+  background: radial-gradient(ellipse, rgba(201, 169, 110, 0.08) 0%, transparent 65%);
 }
 .hero-inner {
   position: relative;
@@ -335,7 +351,7 @@ h1, h2, h3, h4 {
 .scroll-arrow {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
+  background: linear-gradient(to bottom, var(--rose), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 @keyframes scrollPulse {
@@ -356,7 +372,8 @@ h1, h2, h3, h4 {
   position: absolute;
   top: 0; left: 10%; right: 10%;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--border), transparent);
+  background: linear-gradient(to right, transparent, var(--rose-dark), transparent);
+  opacity: 0.35;
 }
 .experience-header {
   text-align: center;
@@ -425,9 +442,9 @@ h1, h2, h3, h4 {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 700px;
+  width: 800px;
   height: 700px;
-  background: radial-gradient(ellipse, rgba(201, 169, 110, 0.04) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(212, 140, 175, 0.08) 0%, transparent 65%);
   pointer-events: none;
 }
 .boxes-header {
@@ -508,12 +525,12 @@ h1, h2, h3, h4 {
   background: var(--bg-card-hover);
 }
 .box-card.featured {
-  border-color: rgba(201, 169, 110, 0.4);
-  box-shadow: 0 0 0 1px rgba(201, 169, 110, 0.15) inset, 0 20px 60px rgba(201, 169, 110, 0.1);
+  border-color: rgba(212, 160, 181, 0.45);
+  box-shadow: 0 0 0 1px rgba(212, 160, 181, 0.12) inset, 0 20px 60px rgba(212, 140, 175, 0.14);
 }
 .box-card.featured:hover {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 1px rgba(201, 169, 110, 0.2) inset, 0 24px 70px rgba(201, 169, 110, 0.15);
+  border-color: var(--rose);
+  box-shadow: 0 0 0 1px rgba(212, 160, 181, 0.18) inset, 0 28px 80px rgba(212, 140, 175, 0.2);
 }
 .box-badge {
   position: absolute;
@@ -684,8 +701,8 @@ h1, h2, h3, h4 {
   left: calc(16.67% + 28px);
   right: calc(16.67% + 28px);
   height: 1px;
-  background: linear-gradient(to right, var(--gold), transparent, var(--gold));
-  opacity: 0.25;
+  background: linear-gradient(to right, var(--rose-dark), transparent, var(--rose-dark));
+  opacity: 0.35;
 }
 .how-step {
   text-align: center;
@@ -697,14 +714,14 @@ h1, h2, h3, h4 {
   justify-content: center;
   width: 56px;
   height: 56px;
-  border: 1px solid var(--border-hover);
+  border: 1px solid var(--rose-dark);
   border-radius: 50%;
   font-family: var(--font-serif);
   font-size: 1.3rem;
   font-weight: 400;
-  color: var(--gold);
+  color: var(--rose-bright);
   margin-bottom: 28px;
-  background: var(--bg);
+  background: var(--bg-2);
   position: relative;
   z-index: 1;
 }
@@ -759,7 +776,7 @@ h1, h2, h3, h4 {
   margin-bottom: 20px;
 }
 .star {
-  color: var(--gold);
+  color: var(--rose);
   font-size: 0.85rem;
 }
 .testimonial-quote {
@@ -858,7 +875,7 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--gold);
+  color: var(--rose);
   transition: transform 0.35s var(--ease-out);
 }
 .faq-item.open .faq-chevron { transform: rotate(45deg); }
@@ -882,7 +899,7 @@ h1, h2, h3, h4 {
 ══════════════════════════════════════ */
 .footer {
   padding: 80px 40px 40px;
-  background: #080808;
+  background: #220E18;
   border-top: 1px solid var(--border);
 }
 .footer-top {
@@ -895,11 +912,14 @@ h1, h2, h3, h4 {
   flex-wrap: wrap;
 }
 .footer-brand-logo {
-  height: 36px;
+  height: 34px;
   width: auto;
   object-fit: contain;
   margin-bottom: 16px;
-  filter: url(#logo-no-white);
+  background: rgba(255, 255, 255, 0.94);
+  padding: 5px 14px;
+  border-radius: 3px;
+  display: inline-block;
 }
 .footer-brand-text {
   font-family: var(--font-serif);
@@ -994,7 +1014,7 @@ h1, h2, h3, h4 {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(20, 6, 14, 0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 200;
