@@ -17,16 +17,9 @@ export default function Footer({ onSubscribeClick }: FooterProps) {
 
       <div className="footer-top">
         <div>
-          <img
-            src="/logo.png"
-            alt="SoloHer"
-            className="footer-brand-logo"
-            onError={e => {
-              e.currentTarget.style.display = 'none'
-              e.currentTarget.nextElementSibling?.removeAttribute('style')
-            }}
-          />
-          <div className="footer-brand-text" style={{ display: 'none' }}>SoloHer</div>
+          <div className="footer-wordmark">
+            <span className="wordmark-solo">Solo</span><span className="wordmark-her">Her</span>
+          </div>
           <p className="footer-tagline">
             Curated rituals for women who know the evening belongs to them.
           </p>

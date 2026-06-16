@@ -21,12 +21,8 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
 
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
-      <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
-        <img src="/logo.png" alt="SoloHer" className="navbar-logo" onError={e => {
-          e.currentTarget.style.display = 'none'
-          e.currentTarget.nextElementSibling?.removeAttribute('style')
-        }} />
-        <span className="navbar-logo-text" style={{ display: 'none' }}>SoloHer</span>
+      <a href="#" className="navbar-wordmark" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
+        <span className="wordmark-solo">Solo</span><span className="wordmark-her">Her</span>
       </a>
 
       <ul className="navbar-links">
