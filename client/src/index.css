@@ -161,9 +161,10 @@ h1, h2, h3, h4 {
   border-bottom: 1px solid var(--border);
 }
 .navbar-logo {
-  height: 36px;
+  height: 40px;
   width: auto;
   object-fit: contain;
+  filter: url(#logo-no-white);
 }
 .navbar-logo-text {
   font-family: var(--font-serif);
@@ -894,10 +895,11 @@ h1, h2, h3, h4 {
   flex-wrap: wrap;
 }
 .footer-brand-logo {
-  height: 32px;
+  height: 36px;
   width: auto;
   object-fit: contain;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  filter: url(#logo-no-white);
 }
 .footer-brand-text {
   font-family: var(--font-serif);
@@ -1099,48 +1101,126 @@ h1, h2, h3, h4 {
 }
 
 /* ══════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — TABLET (≤900px)
 ══════════════════════════════════════ */
 @media (max-width: 900px) {
-  .navbar { padding: 24px 28px; }
-  .navbar.scrolled { padding: 16px 28px; }
+  /* Navbar */
+  .navbar { padding: 20px 24px; }
+  .navbar.scrolled { padding: 14px 24px; }
   .navbar-links { display: none; }
+  .navbar-cta { display: none; }         /* hamburger menu has Subscribe */
   .navbar-hamburger { display: flex; }
 
-  .hero { padding: 0 28px; }
-  .hero-headline { font-size: clamp(3rem, 9vw, 5rem); }
+  /* Hero */
+  .hero { padding: 0 24px; min-height: 100svh; }
+  .hero-inner { padding-top: 72px; }
+  .hero-headline { font-size: clamp(2.8rem, 9vw, 4.5rem); }
+  .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 36px;
+  }
+  .hero-ctas .btn-primary,
+  .hero-ctas .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 17px 32px;
+  }
+  .hero-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 18px;
+  }
+  .hero-trust span + span::before { display: none; }
 
+  /* Sections */
+  .experience { padding: 80px 24px; }
+  .boxes      { padding: 80px 24px; }
+  .how        { padding: 80px 24px; }
+  .testimonials { padding: 80px 24px; }
+  .faq        { padding: 80px 24px; }
+  .footer     { padding: 56px 24px 32px; }
+
+  /* Headers */
+  .experience-header { margin-bottom: 44px; }
+  .boxes-header      { margin-bottom: 16px; }
+  .how-header        { margin-bottom: 52px; }
+  .testimonials-header { margin-bottom: 44px; }
+  .faq-header        { margin-bottom: 44px; }
+
+  /* Grids → single column */
   .experience-grid,
   .boxes-grid,
   .testimonials-grid,
   .how-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
   .how-grid::before { display: none; }
 
-  .experience { padding: 90px 28px; }
-  .boxes { padding: 90px 28px; }
-  .how { padding: 90px 28px; }
-  .testimonials { padding: 90px 28px; }
-  .faq { padding: 90px 28px; }
-  .footer { padding: 60px 28px 32px; }
+  /* Experience cards */
+  .experience-card { padding: 36px 28px; }
 
-  .footer-top { flex-direction: column; gap: 40px; }
-  .footer-cta-row { flex-direction: column; align-items: flex-start; }
+  /* Box cards */
+  .box-card { padding: 36px 28px 32px; }
+  .box-name { font-size: 1.75rem; }
 
-  .modal { padding: 40px 28px; }
+  /* Pricing toggle */
+  .pricing-toggle {
+    width: 100%;
+    margin: 36px auto 48px;
+  }
+  .toggle-btn { flex: 1; text-align: center; padding: 11px 16px; }
+  .toggle-save { display: none; }
 
-  .hero-ctas { flex-direction: column; align-items: flex-start; }
-  .hero-ctas .btn-primary,
-  .hero-ctas .btn-secondary { width: 100%; justify-content: center; }
+  /* Testimonials */
+  .testimonial-card { padding: 32px 24px; }
 
-  .container { padding: 0 28px; }
+  /* FAQ */
+  .faq-question { font-size: 1.05rem; padding: 20px 0; }
+
+  /* Footer */
+  .footer-top { flex-direction: column; gap: 36px; }
+  .footer-links { gap: 36px; }
+  .footer-cta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px 24px;
+    margin-bottom: 40px;
+  }
+  .footer-cta-row .btn-primary { width: 100%; justify-content: center; }
+  .footer-cta-copy h3 { font-size: 1.35rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+  /* Modal */
+  .modal { padding: 40px 24px; }
+  .modal-title { font-size: 1.7rem; }
+
+  .container { padding: 0 24px; }
 }
 
-@media (max-width: 600px) {
-  .hero-headline { font-size: clamp(2.6rem, 11vw, 4rem); }
-  .boxes-grid { gap: 12px; }
-  .pricing-toggle { width: 100%; }
-  .toggle-btn { flex: 1; text-align: center; }
+/* ══════════════════════════════════════
+   RESPONSIVE — MOBILE (≤480px)
+══════════════════════════════════════ */
+@media (max-width: 480px) {
+  .hero-headline { font-size: clamp(2.4rem, 11vw, 3.5rem); }
+  .hero-sub { font-size: 0.95rem; }
+  .hero-inner { padding-top: 64px; }
+
+  .experience-card { padding: 30px 22px; }
+  .box-card { padding: 32px 22px 28px; }
+  .box-name { font-size: 1.6rem; }
+  .box-price { font-size: 2.2rem; }
+
+  .how-step p { max-width: 100%; }
+
+  .footer-legal { flex-direction: column; gap: 10px; }
+  .footer-links { flex-direction: column; gap: 28px; }
+
+  .modal { padding: 36px 20px; }
+  .modal-price { font-size: 2rem; }
+  .modal-subtitle { margin-bottom: 20px; }
 }

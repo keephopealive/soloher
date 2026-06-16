@@ -16,6 +16,18 @@
     />
   </head>
   <body>
+    <!-- SVG filter: removes white backgrounds from PNG logos -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+      <defs>
+        <filter id="logo-no-white" color-interpolation-filters="sRGB">
+          <feColorMatrix type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                   -1 -1 -1 0 3" />
+        </filter>
+      </defs>
+    </svg>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
