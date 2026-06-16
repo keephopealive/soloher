@@ -133,15 +133,14 @@ h1, h2, h3, h4 {
 }
 .btn-primary:active { transform: translateY(0); }
 
-/* btn-secondary lives in the hero (dark bg) — ivory styling */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 15px 44px;
   background: transparent;
-  color: var(--ivory);
-  border: 1px solid rgba(251, 240, 245, 0.38);
+  color: var(--text);
+  border: 1px solid var(--border-hover);
   font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 500;
@@ -152,9 +151,9 @@ h1, h2, h3, h4 {
   white-space: nowrap;
 }
 .btn-secondary:hover {
-  background: rgba(251, 240, 245, 0.08);
-  color: var(--ivory);
-  border-color: rgba(251, 240, 245, 0.58);
+  background: var(--rose-faint);
+  color: var(--rose);
+  border-color: var(--rose);
   transform: translateY(-1px);
 }
 
@@ -208,7 +207,7 @@ h1, h2, h3, h4 {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-dark);
 }
 .wordmark-her {
   font-family: var(--font-serif);
@@ -223,24 +222,19 @@ h1, h2, h3, h4 {
   gap: 44px;
   align-items: center;
 }
-/* Over dark hero — ivory text */
 .navbar-links a {
   font-size: 0.78rem;
   font-weight: 400;
   letter-spacing: 0.08em;
-  color: var(--ivory-dim);
+  color: var(--text-dim);
   transition: color 0.2s ease;
 }
-.navbar-links a:hover { color: var(--ivory); }
-/* Over light sections — dark text */
-.navbar.scrolled .navbar-links a { color: var(--text-dim); }
-.navbar.scrolled .navbar-links a:hover { color: var(--text); }
-
+.navbar-links a:hover { color: var(--text); }
 .navbar-cta {
   padding: 11px 28px;
   background: transparent;
-  border: 1px solid rgba(251, 240, 245, 0.40);
-  color: var(--ivory);
+  border: 1px solid var(--border-hover);
+  color: var(--text);
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -250,15 +244,6 @@ h1, h2, h3, h4 {
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 .navbar-cta:hover {
-  background: rgba(251, 240, 245, 0.10);
-  color: var(--ivory);
-  border-color: rgba(251, 240, 245, 0.60);
-}
-.navbar.scrolled .navbar-cta {
-  color: var(--text);
-  border-color: var(--border-hover);
-}
-.navbar.scrolled .navbar-cta:hover {
   background: var(--rose-faint);
   color: var(--rose);
   border-color: var(--rose);
@@ -273,15 +258,12 @@ h1, h2, h3, h4 {
   display: block;
   width: 22px;
   height: 1px;
-  background: var(--ivory);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.navbar.scrolled .navbar-hamburger span {
   background: var(--text);
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 /* ══════════════════════════════════════
-   HERO  (stays dark — drama + mystery)
+   HERO  (light — pearl & rose)
 ══════════════════════════════════════ */
 .hero {
   position: relative;
@@ -290,8 +272,8 @@ h1, h2, h3, h4 {
   align-items: center;
   overflow: hidden;
   padding: 0 40px;
-  background: var(--bg-dark);
-  color: var(--ivory);
+  background: linear-gradient(150deg, #FAF5F8 0%, #F0DCEA 55%, #FAF5F8 100%);
+  color: var(--text);
 }
 .hero-bg-glow {
   position: absolute;
@@ -305,7 +287,7 @@ h1, h2, h3, h4 {
   right: -5%;
   width: 60%;
   height: 90%;
-  background: radial-gradient(ellipse at 65% 35%, rgba(212, 140, 175, 0.18) 0%, rgba(180, 80, 130, 0.06) 50%, transparent 70%);
+  background: radial-gradient(ellipse at 65% 35%, rgba(196, 90, 122, 0.14) 0%, rgba(196, 90, 122, 0.04) 50%, transparent 70%);
 }
 .hero-bg-glow::after {
   content: '';
@@ -314,7 +296,7 @@ h1, h2, h3, h4 {
   left: -8%;
   width: 50%;
   height: 60%;
-  background: radial-gradient(ellipse, rgba(201, 169, 110, 0.08) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(201, 169, 110, 0.10) 0%, transparent 65%);
 }
 .hero-inner {
   position: relative;
@@ -322,6 +304,7 @@ h1, h2, h3, h4 {
   margin: 0 auto;
   width: 100%;
   padding-top: 100px;
+  padding-bottom: 120px;
 }
 .hero-label {
   animation: heroUp 0.85s var(--ease-out) 0.15s both;
@@ -331,26 +314,25 @@ h1, h2, h3, h4 {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.hero .gold-label { color: var(--gold); }
 .hero-headline {
   font-family: var(--font-serif);
   font-size: clamp(3.6rem, 7vw, 6.5rem);
   font-weight: 400;
   line-height: 1.02;
-  color: var(--ivory);
+  color: var(--text);
   letter-spacing: -0.02em;
   animation: heroUp 0.85s var(--ease-out) 0.28s both;
   max-width: 820px;
 }
 .hero-headline em {
   font-style: italic;
-  color: var(--gold);
+  color: var(--rose);
 }
 .hero-sub {
   margin-top: 28px;
   font-size: 1.05rem;
   font-weight: 300;
-  color: var(--ivory-dim);
+  color: var(--text-dim);
   line-height: 1.7;
   max-width: 520px;
   animation: heroUp 0.85s var(--ease-out) 0.42s both;
@@ -367,7 +349,7 @@ h1, h2, h3, h4 {
   margin-top: 22px;
   font-size: 0.72rem;
   letter-spacing: 0.1em;
-  color: var(--ivory-faint);
+  color: var(--text-faint);
   animation: heroUp 0.85s var(--ease-out) 0.7s both;
 }
 .hero-trust span {
@@ -378,7 +360,7 @@ h1, h2, h3, h4 {
 .hero-trust span + span::before {
   content: '·';
   margin: 0 8px;
-  color: var(--border-dark-hover);
+  color: var(--border-hover);
 }
 .hero-scroll-cue {
   position: absolute;
@@ -395,12 +377,12 @@ h1, h2, h3, h4 {
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ivory-faint);
+  color: var(--text-faint);
 }
 .scroll-arrow {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--rose-bright), transparent);
+  background: linear-gradient(to bottom, var(--rose), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 @keyframes scrollPulse {

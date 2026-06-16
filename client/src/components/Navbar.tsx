@@ -49,7 +49,7 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
         <div style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(46,18,32,0.98)',
+          background: 'rgba(250,245,248,0.98)',
           zIndex: 99,
           display: 'flex',
           flexDirection: 'column',
@@ -59,11 +59,11 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
         }}>
           <button onClick={() => setMenuOpen(false)} style={{
             position: 'absolute', top: 28, right: 28,
-            color: 'var(--ivory)', fontSize: '1.4rem', background: 'none', border: 'none', cursor: 'pointer',
+            color: 'var(--text)', fontSize: '1.4rem', background: 'none', border: 'none', cursor: 'pointer',
           }}>✕</button>
           {[['boxes', 'Our Boxes'], ['how', 'How It Works'], ['faq', 'FAQ']].map(([id, label]) => (
             <button key={id} onClick={() => scrollTo(id)} style={{
-              fontFamily: 'var(--font-serif)', fontSize: '2.2rem', color: 'var(--ivory)',
+              fontFamily: 'var(--font-serif)', fontSize: '2.2rem', color: 'var(--text)',
               background: 'none', border: 'none', cursor: 'pointer',
             }}>{label}</button>
           ))}
