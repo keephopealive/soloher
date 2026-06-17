@@ -41,9 +41,9 @@ export default function FAQ() {
           <h2>Everything You<br />Need to Know</h2>
         </div>
 
-        <div ref={listRef}>
+        <div ref={listRef} className="reveal reveal-d2">
           {FAQS.map((faq, i) => (
-            <div key={i} className={`faq-item reveal reveal-d${Math.min(i + 1, 5)}${open === i ? ' open' : ''}`}>
+            <div key={i} className={`faq-item${open === i ? ' open' : ''}`}>
               <button
                 className="faq-question"
                 onClick={() => setOpen(open === i ? null : i)}
