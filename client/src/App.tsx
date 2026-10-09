@@ -25,6 +25,13 @@ function App() {
     purchaseType: 'subscribe',
   })
   const [legalDoc, setLegalDoc] = useState<LegalDoc | null>(null)
+  // Hero buttons send visitors to the boxes with every card preset to their choice
+  const [boxPreset, setBoxPreset] = useState<{ type: PurchaseType; at: number } | null>(null)
+
+  const goToBoxes = (type: PurchaseType) => {
+    setBoxPreset({ type, at: Date.now() })
+    document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const openModal = (boxId: BoxId, purchaseType: PurchaseType) => {
     setModal({ open: true, boxId, purchaseType })
@@ -41,8 +48,8 @@ function App() {
       <Navbar onSubscribeClick={() => {
         document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
       }} />
-      <Hero onSubscribe={() => openModal(2, 'subscribe')} onOneTime={() => openModal(2, 'oneTime')} />
-      <BoxSelector onSelect={openModal} />
+      <Hero onSubscribe={() => goToBoxes('subscribe')} onOneTime={() => goToBoxes('oneTime')} />
+      <BoxSelector onSelect={openModal} preset={boxPreset} />
       <Testimonials />
       <FAQ />
       <Footer onOpenLegal={setLegalDoc} />

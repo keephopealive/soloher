@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import wordmark from '../assets/logo-wordmark.webp'
 
 interface NavbarProps {
   onSubscribeClick: () => void
@@ -22,7 +23,7 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <a href="#" className="navbar-wordmark" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
-        <span className="wordmark-solo">Solo</span><span className="wordmark-her">Her</span>
+        <img src={wordmark} alt="SoloHer" width={900} height={136} />
       </a>
 
       <ul className="navbar-links">

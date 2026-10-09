@@ -1,4 +1,5 @@
 import type { LegalDoc } from './LegalModal'
+import logoFull from '../assets/logo-full.webp'
 
 interface FooterProps {
   onOpenLegal: (doc: LegalDoc) => void
@@ -9,9 +10,7 @@ export default function Footer({ onOpenLegal }: FooterProps) {
     <footer className="footer">
       <div className="footer-top">
         <div>
-          <div className="footer-wordmark">
-            <span className="wordmark-solo">Solo</span><span className="wordmark-her">Her</span>
-          </div>
+          <img className="footer-logo" src={logoFull} alt="SoloHer" width={640} height={661} />
         </div>
 
         <div className="footer-links">

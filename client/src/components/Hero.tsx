@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import heroBox from '../assets/hero-box.webp'
 
 interface HeroProps {
   onSubscribe: () => void
@@ -24,39 +25,50 @@ export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
       <div className="hero-bg-glow" aria-hidden />
 
       <div className="hero-inner">
-        <span className="gold-label hero-label">Curated for women, by women</span>
+        <div className="hero-copy">
+          <span className="gold-label hero-label">Curated for women, by women</span>
 
-        <h1 className="hero-headline">
-          The{' '}
-          <span className="hero-rotator" aria-hidden>
-            {ROTATING_WORDS.map((word, i) => (
-              <span key={word} className={i === wordIndex ? 'is-active' : undefined}>
-                {word}
-              </span>
-            ))}
-          </span>
-          <span className="sr-only">{ROTATING_WORDS[0]}</span>
-          <br />
-          Is <em>Yours.</em>
-        </h1>
+          <h1 className="hero-headline">
+            The{' '}
+            <span className="hero-rotator" aria-hidden>
+              {ROTATING_WORDS.map((word, i) => (
+                <span key={word} className={i === wordIndex ? 'is-active' : undefined}>
+                  {word}
+                </span>
+              ))}
+            </span>
+            <span className="sr-only">{ROTATING_WORDS[0]}</span>
+            <br />
+            Is <em>Yours.</em>
+          </h1>
 
-        <p className="hero-sub">
-          Three pleasures. One ritual. Delivered discreetly to your door each month.
-        </p>
+          <p className="hero-sub">
+            Three pleasures. One ritual. Delivered discreetly to your door each month.
+          </p>
 
-        <div className="hero-ctas">
-          <button className="btn-primary" onClick={onSubscribe}>
-            Start My Monthly Ritual · $99.99
-          </button>
-          <button className="btn-secondary" onClick={onOneTime}>
-            Gift Myself Once · $124.99
-          </button>
+          <div className="hero-ctas">
+            <button className="btn-primary" onClick={onSubscribe}>
+              Start My Monthly Ritual · $99.99
+            </button>
+            <button className="btn-secondary" onClick={onOneTime}>
+              Gift One Ritual · $124.99
+            </button>
+          </div>
+
+          <p className="hero-trust">
+            <span>Discreet packaging</span>
+            <span>Cancel anytime</span>
+          </p>
         </div>
 
-        <p className="hero-trust">
-          <span>Discreet packaging</span>
-          <span>Cancel anytime</span>
-        </p>
+        <figure className="hero-visual">
+          <img
+            src={heroBox}
+            width={1122}
+            height={1402}
+            alt="SoloHer box with a 375 ml bottle of wine, a lavender bath bomb and a SoloHer story book"
+          />
+        </figure>
       </div>
 
       <a

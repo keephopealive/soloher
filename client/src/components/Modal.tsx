@@ -73,7 +73,7 @@ export default function Modal({ modal, onClose }: ModalProps) {
         ) : (
           <>
             <span className="gold-label modal-gold-label">
-              {isSubscribe ? 'Monthly Subscription' : 'One-Time Purchase'}
+              {isSubscribe ? 'Monthly Subscription' : 'One-Time Gift'}
             </span>
             <h2 className="modal-title">{boxName}</h2>
             <p className="modal-subtitle">

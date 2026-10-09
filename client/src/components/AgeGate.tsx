@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import logoFull from '../assets/logo-full.webp'
 
 const STORAGE_KEY = 'soloher-age-verified'
 
@@ -33,9 +34,7 @@ export default function AgeGate() {
   return (
     <div className="modal-overlay age-gate">
       <div className="modal age-gate-modal" role="dialog" aria-modal="true" aria-labelledby="age-gate-title">
-        <div className="age-gate-wordmark" aria-hidden>
-          <span className="wordmark-solo">Solo</span><span className="wordmark-her">Her</span>
-        </div>
+        <img className="age-gate-logo" src={logoFull} alt="SoloHer" width={640} height={661} />
 
         {status === 'ask' ? (
           <>
