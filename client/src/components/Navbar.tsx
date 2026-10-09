@@ -27,7 +27,6 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
 
       <ul className="navbar-links">
         <li><a href="#boxes" onClick={e => { e.preventDefault(); scrollTo('boxes') }}>Our Boxes</a></li>
-        <li><a href="#how" onClick={e => { e.preventDefault(); scrollTo('how') }}>How It Works</a></li>
         <li><a href="#faq" onClick={e => { e.preventDefault(); scrollTo('faq') }}>FAQ</a></li>
       </ul>
 
@@ -61,7 +60,7 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
             position: 'absolute', top: 28, right: 28,
             color: 'var(--text)', fontSize: '1.4rem', background: 'none', border: 'none', cursor: 'pointer',
           }}>✕</button>
-          {[['boxes', 'Our Boxes'], ['how', 'How It Works'], ['faq', 'FAQ']].map(([id, label]) => (
+          {[['boxes', 'Our Boxes'], ['faq', 'FAQ']].map(([id, label]) => (
             <button key={id} onClick={() => scrollTo(id)} style={{
               fontFamily: 'var(--font-serif)', fontSize: '2.2rem', color: 'var(--text)',
               background: 'none', border: 'none', cursor: 'pointer',

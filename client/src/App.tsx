@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import BoxSelector from './components/BoxSelector'
-import HowItWorks from './components/HowItWorks'
 import Testimonials from './components/Testimonials'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
@@ -39,7 +38,6 @@ function App() {
       }} />
       <Hero onSubscribe={() => openModal(2, 'subscribe')} onOneTime={() => openModal(2, 'oneTime')} />
       <BoxSelector onSelect={openModal} />
-      <HowItWorks />
       <Testimonials />
       <FAQ />
       <Footer onSubscribeClick={() => openModal(2, 'subscribe')} />

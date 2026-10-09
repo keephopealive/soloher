@@ -64,7 +64,7 @@ export default function Modal({ modal, onClose }: ModalProps) {
             <h2 className="modal-title">Welcome to SoloHer</h2>
             <p className="modal-subtitle">
               We've received your order for <strong style={{ color: 'var(--gold)' }}>{boxName}</strong>.
-              Check your inbox — your confirmation and first ritual details are on their way.
+              Check your inbox. Your confirmation and first ritual details are on their way.
             </p>
             <button className="btn-primary" onClick={onClose} style={{ width: '100%', marginTop: '8px' }}>
               Close

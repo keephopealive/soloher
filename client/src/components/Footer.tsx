@@ -11,7 +11,7 @@ export default function Footer({ onSubscribeClick }: FooterProps) {
           <p>Join thousands of women who've made their evenings their own.</p>
         </div>
         <button className="btn-primary" onClick={onSubscribeClick}>
-          Start My Ritual — $99.99/mo
+          Start My Ritual · $99.99/mo
         </button>
       </div>
 
@@ -30,7 +30,6 @@ export default function Footer({ onSubscribeClick }: FooterProps) {
             <h4>Explore</h4>
             <ul>
               <li><a href="#boxes" onClick={e => { e.preventDefault(); document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' }) }}>Our Boxes</a></li>
-              <li><a href="#how" onClick={e => { e.preventDefault(); document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' }) }}>How It Works</a></li>
               <li><a href="#faq" onClick={e => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }) }}>FAQ</a></li>
             </ul>
           </div>

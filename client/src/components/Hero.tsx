@@ -46,10 +46,10 @@ export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
 
         <div className="hero-ctas">
           <button className="btn-primary" onClick={onSubscribe}>
-            Start My Monthly Ritual — $99.99
+            Start My Monthly Ritual · $99.99
           </button>
           <button className="btn-secondary" onClick={onOneTime}>
-            Gift Myself Once — $124.99
+            Gift Myself Once · $124.99
           </button>
         </div>
 

@@ -12,9 +12,11 @@ const BOXES = [
     mood: 'Tender · Romantic',
     name: 'The Velvet Hour',
     tagline: 'For the woman who craves tenderness.',
-    featured: false,
-    wine: 'Pinot Noir — silky, delicate, and effortlessly smooth',
-    bathBomb: 'Lavender & Rose Quartz — calming, floral, made for slow evenings',
+    wineType: 'Red',
+    wineName: 'King Estate Pinot Noir, Willamette Valley 2023',
+    wineNotes: 'Silky and elegant, with red cherry and raspberry, a whisper of baking spice and a soft, lingering finish.',
+    bathBombName: 'Lavender Rosemary',
+    bathBombNotes: 'Soft lavender lifted by fresh, herbal rosemary. Calming and quietly floral, made for slow evenings.',
     storyTheme: 'A slow-burn story of longing and surrender',
   },
   {
@@ -22,9 +24,11 @@ const BOXES = [
     mood: 'Bold · Confident',
     name: 'The Midnight Bloom',
     tagline: 'For the woman who knows exactly what she wants.',
-    featured: true,
-    wine: 'Cabernet Sauvignon — bold, full-bodied, and unapologetically rich',
-    bathBomb: 'Midnight Jasmine & Black Orchid — intoxicating, mysterious, unforgettable',
+    wineType: 'White',
+    wineName: 'Chalk Hill Chardonnay',
+    wineNotes: 'Rich and layered, with ripe pear, golden apple and citrus, rounded out by vanilla and a creamy, toasty finish.',
+    bathBombName: 'Oatmeal Milk & Honey',
+    bathBombNotes: 'Creamy oat and milk sweetened with golden honey. Soft, comforting, and as velvety as the Chardonnay beside it.',
     storyTheme: 'A story where desire meets its match',
   },
   {
@@ -32,20 +36,25 @@ const BOXES = [
     mood: 'Deep · Adventurous',
     name: 'The Crimson Reverie',
     tagline: 'For the woman ready to go somewhere deeper.',
-    featured: false,
-    wine: 'Merlot & Syrah Blend — complex, dark, and deeply satisfying',
-    bathBomb: 'Cherry Blossom & Sandalwood — warm, exotic, transformative',
+    wineType: 'Rosé',
+    wineName: "Château d'Esclans Whispering Angel, Côtes de Provence 2025",
+    wineNotes: 'Pale, dry and luminous, with fresh strawberry, white peach and citrus and a crisp, mineral finish.',
+    bathBombName: 'Honeysuckle',
+    bathBombNotes: 'Sweet, sunlit honeysuckle blossom. Light, floral and bright, as fresh as the rosé in your glass.',
     storyTheme: 'A tale of complete surrender and discovery',
   },
 ]
 
+const PURCHASE_OPTIONS: { type: PurchaseType; label: string }[] = [
+  { type: 'subscribe', label: 'Monthly' },
+  { type: 'oneTime', label: 'One-time' },
+]
+
 export default function BoxSelector({ onSelect }: BoxSelectorProps) {
-  const [purchaseType, setPurchaseType] = useState<PurchaseType>('subscribe')
+  // Each card keeps its own purchase choice; monthly is the default
+  const [choices, setChoices] = useState<Record<BoxId, PurchaseType>>({ 1: 'subscribe', 2: 'subscribe', 3: 'subscribe' })
   const headerRef = useScrollReveal<HTMLDivElement>()
   const gridRef = useScrollReveal<HTMLDivElement>(100)
-
-  const price = purchaseType === 'subscribe' ? '$99.99' : '$124.99'
-  const period = purchaseType === 'subscribe' ? '/month' : 'one-time'
 
   return (
     <section className="boxes" id="boxes">
@@ -55,78 +64,69 @@ export default function BoxSelector({ onSelect }: BoxSelectorProps) {
         <p>Each box is built around a different mood.<br />Which one is calling to you?</p>
       </div>
 
-      <div
-        className={`pricing-toggle${purchaseType === 'oneTime' ? ' is-one-time' : ''}`}
-        role="group"
-        aria-label="Purchase type"
-      >
-        <span className="toggle-thumb" aria-hidden />
-        <button
-          className={`toggle-btn${purchaseType === 'subscribe' ? ' active' : ''}`}
-          aria-pressed={purchaseType === 'subscribe'}
-          onClick={() => setPurchaseType('subscribe')}
-        >
-          <span className="toggle-label">Monthly Subscription</span>
-          <span className="toggle-price">$99.99</span>
-        </button>
-        <button
-          className={`toggle-btn${purchaseType === 'oneTime' ? ' active' : ''}`}
-          aria-pressed={purchaseType === 'oneTime'}
-          onClick={() => setPurchaseType('oneTime')}
-        >
-          <span className="toggle-label">One-Time Purchase</span>
-          <span className="toggle-price">$124.99</span>
-        </button>
-      </div>
-
       <div className="boxes-grid" ref={gridRef}>
         {BOXES.map((box, i) => (
-          <div
-            key={box.id}
-            className={`box-card reveal reveal-d${i + 1}${box.featured ? ' featured' : ''}`}
-          >
-            {box.featured && <div className="box-badge">Most Popular</div>}
-
+          <div key={box.id} className={`box-card reveal reveal-d${i + 1}`}>
             <div className="box-mood">{box.mood}</div>
             <div className="box-name">{box.name}</div>
             <p className="box-tagline">{box.tagline}</p>
 
-            <div className="box-divider" />
-
             <div className="box-contents">
+              <div className="box-story">
+                <span className="box-story-label">
+                  <span role="img" aria-label="Story">📖</span> Your story
+                </span>
+                <p className="box-story-theme">{box.storyTheme}</p>
+              </div>
+
+              <div className="box-pairing-divider">
+                <span>Paired with</span>
+              </div>
+
               <div className="box-item">
                 <span className="box-item-icon" role="img" aria-label="Wine">🍷</span>
                 <div className="box-item-text">
-                  <strong>Wine Selection</strong>
-                  {box.wine}
+                  <strong>{box.wineType} Wine</strong>
+                  <span className="box-item-name">{box.wineName}</span>
+                  {box.wineNotes}
                 </div>
               </div>
               <div className="box-item">
                 <span className="box-item-icon" role="img" aria-label="Bath">🛁</span>
                 <div className="box-item-text">
                   <strong>Bath Bomb</strong>
-                  {box.bathBomb}
-                </div>
-              </div>
-              <div className="box-item">
-                <span className="box-item-icon" role="img" aria-label="Story">📖</span>
-                <div className="box-item-text">
-                  <strong>Original Story</strong>
-                  {box.storyTheme}
+                  <span className="box-item-name">{box.bathBombName}</span>
+                  {box.bathBombNotes}
                 </div>
               </div>
             </div>
 
-            <div className="box-price-row">
-              <div className="box-price">{price}</div>
-              <div className="box-price-period">{period}</div>
+            <div
+              className={`purchase-toggle${choices[box.id] === 'oneTime' ? ' is-one-time' : ''}`}
+              role="group"
+              aria-label={`Purchase options for ${box.name}`}
+            >
+              <span className="purchase-toggle-thumb" aria-hidden />
+              {PURCHASE_OPTIONS.map(opt => {
+                const active = choices[box.id] === opt.type
+                return (
+                  <button
+                    key={opt.type}
+                    className={`purchase-toggle-btn${active ? ' active' : ''}`}
+                    aria-pressed={active}
+                    onClick={() => setChoices(prev => ({ ...prev, [box.id]: opt.type }))}
+                  >
+                    <span className="purchase-toggle-label">{opt.label}</span>
+                  </button>
+                )
+              })}
             </div>
 
             <button
               className="box-cta"
-              onClick={() => onSelect(box.id, purchaseType)}
+              onClick={() => onSelect(box.id, choices[box.id])}
             >
-              {purchaseType === 'subscribe' ? `Subscribe to ${box.name}` : `Order ${box.name}`}
+              {choices[box.id] === 'subscribe' ? 'Subscribe · $99.99/mo' : 'Buy Once · $124.99'}
             </button>
           </div>
         ))}

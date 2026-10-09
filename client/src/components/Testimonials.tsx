@@ -7,7 +7,7 @@ const REVIEWS = [
     meta: '34 · Subscribed 8 months',
     box: 'The Midnight Bloom',
     quote:
-      "I bought one box on a whim and immediately subscribed. My Tuesday nights are sacred now — my husband knows not to interrupt.",
+      "I bought one box on a whim and immediately subscribed. My Tuesday nights are sacred now. My husband knows not to interrupt.",
   },
   {
     initials: 'A',
@@ -23,7 +23,7 @@ const REVIEWS = [
     meta: '42 · Subscribed 1 year',
     box: 'The Crimson Reverie',
     quote:
-      "I've tried other subscription boxes. This one actually understands what women want. It's not just a box — it's permission to enjoy yourself.",
+      "I've tried other subscription boxes. This one actually understands what women want. It's not just a box. It's permission to enjoy yourself.",
   },
 ]
 
