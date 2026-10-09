@@ -116,7 +116,7 @@ h1, h2, h3, h4 {
   padding: 16px 44px;
   background: linear-gradient(90deg, #9B7B45 0%, #C9A96E 28%, #F0D9A8 50%, #C9A96E 72%, #9B7B45 100%);
   background-size: 200% auto;
-  animation: shimmer 4s linear infinite;
+  animation: shimmer 30s linear infinite;
   color: #0D0D0D;
   font-family: var(--font-sans);
   font-size: 0.78rem;
@@ -328,6 +328,37 @@ h1, h2, h3, h4 {
   font-style: italic;
   color: var(--rose);
 }
+/* Rotating word: all words share one grid cell, so the line never reflows */
+.hero-rotator {
+  display: inline-grid;
+  vertical-align: bottom;
+}
+.hero-rotator > span {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(0.12em);
+  filter: blur(6px);
+  transition:
+    opacity 1.4s cubic-bezier(0.45, 0, 0.25, 1),
+    transform 1.4s cubic-bezier(0.45, 0, 0.25, 1),
+    filter 1.4s cubic-bezier(0.45, 0, 0.25, 1);
+}
+.hero-rotator > span.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 .hero-sub {
   margin-top: 28px;
   font-size: 1.05rem;
@@ -344,6 +375,11 @@ h1, h2, h3, h4 {
   align-items: center;
   flex-wrap: wrap;
   animation: heroUp 0.85s var(--ease-out) 0.56s both;
+}
+/* Hero CTA keeps the gold gradient but holds it still, highlight centered */
+.hero-ctas .btn-primary {
+  animation: none;
+  background-position: center;
 }
 .hero-trust {
   margin-top: 22px;
@@ -371,6 +407,8 @@ h1, h2, h3, h4 {
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
   animation: heroUp 1s var(--ease-out) 1s both;
 }
 .hero-scroll-cue span {
@@ -378,6 +416,11 @@ h1, h2, h3, h4 {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-faint);
+  transition: color 0.3s ease;
+}
+.hero-scroll-cue:hover span,
+.hero-scroll-cue:focus-visible span {
+  color: var(--rose);
 }
 .scroll-arrow {
   width: 1px;
@@ -388,80 +431,6 @@ h1, h2, h3, h4 {
 @keyframes scrollPulse {
   0%, 100% { opacity: 0.4; transform: scaleY(1); }
   50%       { opacity: 1;   transform: scaleY(0.85); }
-}
-
-/* ══════════════════════════════════════
-   EXPERIENCE
-══════════════════════════════════════ */
-.experience {
-  padding: 130px 40px;
-  background: var(--bg);
-  position: relative;
-}
-.experience::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 10%; right: 10%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--border-hover), transparent);
-  opacity: 0.5;
-}
-.experience-header {
-  text-align: center;
-  margin-bottom: 80px;
-}
-.experience-header h2 {
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  margin-top: 18px;
-  max-width: 560px;
-  margin-inline: auto;
-}
-.experience-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  max-width: var(--max-w);
-  margin: 0 auto;
-}
-.experience-card {
-  padding: 56px 44px;
-  background: var(--bg-card);
-  text-align: center;
-  position: relative;
-  border: 1px solid var(--border);
-  transition: background 0.3s ease, border-color 0.3s ease;
-}
-.experience-card:hover {
-  background: #FBF0F8;
-  border-color: var(--border-hover);
-}
-.experience-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: var(--gold);
-  transition: width 0.4s var(--ease-out);
-}
-.experience-card:hover::after { width: 60%; }
-.experience-icon {
-  font-size: 2rem;
-  margin-bottom: 24px;
-  display: block;
-}
-.experience-card h3 {
-  font-size: 1.55rem;
-  margin-bottom: 14px;
-  color: var(--text);
-}
-.experience-card p {
-  font-size: 0.88rem;
-  line-height: 1.75;
-  color: var(--text-dim);
-  max-width: 220px;
-  margin-inline: auto;
 }
 
 /* ══════════════════════════════════════
@@ -499,42 +468,63 @@ h1, h2, h3, h4 {
   margin-inline: auto;
   line-height: 1.7;
 }
+/* Two-option switch: a gold thumb slides behind the selected half */
 .pricing-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   margin: 48px auto 64px;
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(201, 169, 110, 0.45);
   border-radius: 100px;
-  width: fit-content;
+  width: min(100%, 520px);
   padding: 5px;
+  box-shadow: inset 0 1px 4px rgba(155, 123, 69, 0.12);
+}
+.toggle-thumb {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  width: calc(50% - 5px);
+  border-radius: 100px;
+  background: linear-gradient(90deg, #9B7B45 0%, #C9A96E 28%, #F0D9A8 50%, #C9A96E 72%, #9B7B45 100%);
+  background-size: 200% auto;
+  background-position: center;
+  box-shadow: 0 4px 14px rgba(155, 123, 69, 0.3);
+  transition: transform 0.45s cubic-bezier(0.45, 0, 0.25, 1);
+}
+.pricing-toggle.is-one-time .toggle-thumb {
+  transform: translateX(100%);
 }
 .toggle-btn {
-  padding: 11px 32px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 24px;
   border-radius: 100px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.toggle-btn:not(.active):hover {
+  color: var(--gold-dark);
+}
+.toggle-btn.active {
+  color: #0D0D0D;
+}
+.toggle-label {
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.06em;
-  color: var(--text-dim);
-  transition: all 0.3s ease;
-  position: relative;
 }
-.toggle-btn.active {
-  background: var(--gold-faint);
-  color: var(--gold-dark);
-  border: 1px solid rgba(201, 169, 110, 0.35);
-}
-.toggle-save {
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold-dark);
-  margin-left: 6px;
-  background: rgba(201, 169, 110, 0.15);
-  padding: 2px 7px;
-  border-radius: 100px;
+.toggle-price {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.1;
 }
 .boxes-grid {
   display: grid;
@@ -642,17 +632,6 @@ h1, h2, h3, h4 {
   font-size: 0.82rem;
   letter-spacing: 0.04em;
 }
-.box-story-desc {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 0.92rem;
-  color: var(--text-dim);
-  line-height: 1.6;
-  padding: 16px 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 28px;
-}
 .box-price-row {
   margin-bottom: 20px;
 }
@@ -682,7 +661,7 @@ h1, h2, h3, h4 {
 .box-card.featured .box-cta {
   background: linear-gradient(90deg, #9B7B45 0%, #C9A96E 28%, #F0D9A8 50%, #C9A96E 72%, #9B7B45 100%);
   background-size: 200% auto;
-  animation: shimmer 4s linear infinite;
+  animation: shimmer 30s linear infinite;
   color: #0D0D0D;
   border: none;
 }
@@ -1190,7 +1169,6 @@ h1, h2, h3, h4 {
   .hero-trust span + span::before { display: none; }
 
   /* Sections */
-  .experience { padding: 80px 24px; }
   .boxes      { padding: 80px 24px; }
   .how        { padding: 80px 24px; }
   .testimonials { padding: 80px 24px; }
@@ -1198,14 +1176,12 @@ h1, h2, h3, h4 {
   .footer     { padding: 56px 24px 32px; }
 
   /* Headers */
-  .experience-header { margin-bottom: 44px; }
   .boxes-header      { margin-bottom: 16px; }
   .how-header        { margin-bottom: 52px; }
   .testimonials-header { margin-bottom: 44px; }
   .faq-header        { margin-bottom: 44px; }
 
   /* Grids → single column */
-  .experience-grid,
   .boxes-grid,
   .testimonials-grid,
   .how-grid {
@@ -1213,9 +1189,6 @@ h1, h2, h3, h4 {
     gap: 12px;
   }
   .how-grid::before { display: none; }
-
-  /* Experience cards */
-  .experience-card { padding: 36px 28px; }
 
   /* Box cards */
   .box-card { padding: 36px 28px 32px; }
@@ -1226,8 +1199,8 @@ h1, h2, h3, h4 {
     width: 100%;
     margin: 36px auto 48px;
   }
-  .toggle-btn { flex: 1; text-align: center; padding: 11px 16px; }
-  .toggle-save { display: none; }
+  .toggle-btn { padding: 11px 12px; }
+  .toggle-label { font-size: 0.72rem; letter-spacing: 0.03em; }
 
   /* Testimonials */
   .testimonial-card { padding: 32px 24px; }
@@ -1264,7 +1237,6 @@ h1, h2, h3, h4 {
   .hero-sub { font-size: 0.95rem; }
   .hero-inner { padding-top: 64px; }
 
-  .experience-card { padding: 30px 22px; }
   .box-card { padding: 32px 22px 28px; }
   .box-name { font-size: 1.6rem; }
   .box-price { font-size: 2.2rem; }

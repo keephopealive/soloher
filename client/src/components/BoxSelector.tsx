@@ -16,7 +16,6 @@ const BOXES = [
     wine: 'Pinot Noir — silky, delicate, and effortlessly smooth',
     bathBomb: 'Lavender & Rose Quartz — calming, floral, made for slow evenings',
     storyTheme: 'A slow-burn story of longing and surrender',
-    storyDesc: '"A Paris Romance" — tender moments that build like a long exhale.',
   },
   {
     id: 2 as BoxId,
@@ -27,7 +26,6 @@ const BOXES = [
     wine: 'Cabernet Sauvignon — bold, full-bodied, and unapologetically rich',
     bathBomb: 'Midnight Jasmine & Black Orchid — intoxicating, mysterious, unforgettable',
     storyTheme: 'A story where desire meets its match',
-    storyDesc: '"A Bold Encounter" — she walked in knowing. She left having everything.',
   },
   {
     id: 3 as BoxId,
@@ -38,7 +36,6 @@ const BOXES = [
     wine: 'Merlot & Syrah Blend — complex, dark, and deeply satisfying',
     bathBomb: 'Cherry Blossom & Sandalwood — warm, exotic, transformative',
     storyTheme: 'A tale of complete surrender and discovery',
-    storyDesc: '"Uncharted" — for when you want to lose yourself, completely.',
   },
 ]
 
@@ -47,30 +44,38 @@ export default function BoxSelector({ onSelect }: BoxSelectorProps) {
   const headerRef = useScrollReveal<HTMLDivElement>()
   const gridRef = useScrollReveal<HTMLDivElement>(100)
 
-  const price = purchaseType === 'subscribe' ? '$99.99' : '$129.99'
+  const price = purchaseType === 'subscribe' ? '$99.99' : '$124.99'
   const period = purchaseType === 'subscribe' ? '/month' : 'one-time'
 
   return (
     <section className="boxes" id="boxes">
       <div className="boxes-header reveal" ref={headerRef}>
-        <span className="gold-label">Three curated experiences</span>
-        <h2>Choose Your Ritual</h2>
-        <p>Each box is built around a different mood. Which one is calling to you tonight?</p>
+        <span className="gold-label">Curated ritual</span>
+        <h2>Choose Your Experience</h2>
+        <p>Each box is built around a different mood.<br />Which one is calling to you?</p>
       </div>
 
-      <div className="pricing-toggle" role="group" aria-label="Purchase type">
+      <div
+        className={`pricing-toggle${purchaseType === 'oneTime' ? ' is-one-time' : ''}`}
+        role="group"
+        aria-label="Purchase type"
+      >
+        <span className="toggle-thumb" aria-hidden />
         <button
           className={`toggle-btn${purchaseType === 'subscribe' ? ' active' : ''}`}
+          aria-pressed={purchaseType === 'subscribe'}
           onClick={() => setPurchaseType('subscribe')}
         >
-          Monthly Subscription
-          <span className="toggle-save">Save $30</span>
+          <span className="toggle-label">Monthly Subscription</span>
+          <span className="toggle-price">$99.99</span>
         </button>
         <button
           className={`toggle-btn${purchaseType === 'oneTime' ? ' active' : ''}`}
+          aria-pressed={purchaseType === 'oneTime'}
           onClick={() => setPurchaseType('oneTime')}
         >
-          One-Time Purchase
+          <span className="toggle-label">One-Time Purchase</span>
+          <span className="toggle-price">$124.99</span>
         </button>
       </div>
 
@@ -111,8 +116,6 @@ export default function BoxSelector({ onSelect }: BoxSelectorProps) {
                 </div>
               </div>
             </div>
-
-            <p className="box-story-desc">{box.storyDesc}</p>
 
             <div className="box-price-row">
               <div className="box-price">{price}</div>

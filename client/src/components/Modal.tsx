@@ -25,7 +25,7 @@ export default function Modal({ modal, onClose }: ModalProps) {
 
   const boxName = modal.boxId ? BOX_NAMES[modal.boxId] : ''
   const isSubscribe = modal.purchaseType === 'subscribe'
-  const price = isSubscribe ? '$99.99' : '$129.99'
+  const price = isSubscribe ? '$99.99' : '$124.99'
   const period = isSubscribe ? '/month · cancel anytime' : 'one-time charge'
 
   const handleSubmit = async (e: React.FormEvent) => {

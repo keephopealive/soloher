@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import Experience from './components/Experience'
 import BoxSelector from './components/BoxSelector'
 import HowItWorks from './components/HowItWorks'
 import Testimonials from './components/Testimonials'
@@ -39,7 +38,6 @@ function App() {
         document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
       }} />
       <Hero onSubscribe={() => openModal(2, 'subscribe')} onOneTime={() => openModal(2, 'oneTime')} />
-      <Experience />
       <BoxSelector onSelect={openModal} />
       <HowItWorks />
       <Testimonials />
