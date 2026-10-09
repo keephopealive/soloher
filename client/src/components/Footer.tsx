@@ -1,28 +1,17 @@
+import type { LegalDoc } from './LegalModal'
+
 interface FooterProps {
-  onSubscribeClick: () => void
+  onOpenLegal: (doc: LegalDoc) => void
 }
 
-export default function Footer({ onSubscribeClick }: FooterProps) {
+export default function Footer({ onOpenLegal }: FooterProps) {
   return (
     <footer className="footer">
-      <div className="footer-cta-row">
-        <div className="footer-cta-copy">
-          <h3>Your ritual is one click away.</h3>
-          <p>Join thousands of women who've made their evenings their own.</p>
-        </div>
-        <button className="btn-primary" onClick={onSubscribeClick}>
-          Start My Ritual · $99.99/mo
-        </button>
-      </div>
-
       <div className="footer-top">
         <div>
           <div className="footer-wordmark">
             <span className="wordmark-solo">Solo</span><span className="wordmark-her">Her</span>
           </div>
-          <p className="footer-tagline">
-            Curated rituals for women who know the evening belongs to them.
-          </p>
         </div>
 
         <div className="footer-links">
@@ -58,9 +47,9 @@ export default function Footer({ onSubscribeClick }: FooterProps) {
       <div className="footer-bottom">
         <p className="footer-copy">© {new Date().getFullYear()} SoloHer. All rights reserved.</p>
         <div className="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Age Verification</a>
+          <button onClick={() => onOpenLegal('privacy')}>Privacy Policy</button>
+          <button onClick={() => onOpenLegal('terms')}>Terms of Service</button>
+          <button onClick={() => onOpenLegal('age')}>Age Verification</button>
         </div>
       </div>
     </footer>
