@@ -56,7 +56,6 @@ export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
           </div>
 
           <p className="hero-trust">
-            <span>Discreet packaging</span>
             <span>Cancel anytime</span>
           </p>
         </div>

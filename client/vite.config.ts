@@ -6,6 +6,8 @@ export default defineConfig({
   base: '/soloher/',
   server: {
     port: 3000,
+    // Polling catches rapid successive saves that the native Windows watcher can miss
+    watch: { usePolling: true, interval: 200 },
     proxy: {
       '/api': {
         target: 'http://localhost:3001',
