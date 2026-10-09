@@ -53,7 +53,7 @@ html { scroll-behavior: smooth; font-size: 16px; }
 /* Larger screens: scrolling settles on the next section when close, but never locks */
 @media (min-width: 901px) {
   html { scroll-snap-type: y proximity; }
-  .hero, .boxes, .testimonials, .faq { scroll-snap-align: start; }
+  .hero, .boxes, .story, .testimonials, .faq { scroll-snap-align: start; }
   .footer { scroll-snap-align: end; }
 }
 body {
@@ -309,7 +309,7 @@ h1, h2, h3, h4 {
   gap: 64px;
 }
 .hero-copy { min-width: 0; }
-/* Product photo, framed so its cream backdrop sits softly on the pink hero */
+/* Product photo with a soft glow behind it */
 .hero-visual {
   position: relative;
   margin: 0;
@@ -322,14 +322,14 @@ h1, h2, h3, h4 {
   background: radial-gradient(ellipse at center, rgba(196, 90, 122, 0.16) 0%, rgba(201, 169, 110, 0.08) 45%, transparent 70%);
   pointer-events: none;
 }
+/* Cut-out photo: no frame, a soft shadow that follows the box shape */
 .hero-visual img {
   position: relative;
   display: block;
-  height: min(64vh, 580px);
+  height: min(66vh, 600px);
   width: auto;
   max-width: 100%;
-  border-radius: 14px;
-  box-shadow: 0 30px 70px rgba(46, 18, 32, 0.18), 0 8px 22px rgba(46, 18, 32, 0.08);
+  filter: drop-shadow(0 28px 34px rgba(46, 18, 32, 0.22)) drop-shadow(0 6px 10px rgba(46, 18, 32, 0.10));
 }
 .hero-label {
   animation: heroUp 0.85s var(--ease-out) 0.15s both;
@@ -731,11 +731,134 @@ h1, h2, h3, h4 {
 }
 
 /* ══════════════════════════════════════
+   STORY (an original story in every box)
+══════════════════════════════════════ */
+.story {
+  position: relative;
+  padding: 96px 40px 64px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.story::before {
+  content: '';
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  width: 900px;
+  height: 640px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(196, 90, 122, 0.10) 0%, rgba(201, 169, 110, 0.05) 45%, transparent 70%);
+  pointer-events: none;
+}
+.story-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.story-header h2 {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  line-height: 1.12;
+  margin-top: 14px;
+}
+.story-header h2 em {
+  font-style: italic;
+  color: var(--rose);
+}
+.story-header p {
+  margin-top: 14px;
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+.story-stage {
+  position: relative;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.story-visual {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+  transform: translateX(12%);
+}
+.story-visual img {
+  display: block;
+  height: min(50vh, 470px);
+  width: auto;
+  filter: drop-shadow(0 26px 30px rgba(46, 18, 32, 0.20)) drop-shadow(0 6px 10px rgba(46, 18, 32, 0.08));
+}
+/* Gold line from the copy to a dot on the story book */
+.story-callout {
+  position: absolute;
+  right: 55%;
+  top: 47%;
+  width: 360px;
+  transform: translateY(-100%);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--gold);
+  text-align: left;
+}
+.story-callout::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--gold);
+}
+.story-callout strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.story-callout span {
+  display: block;
+  max-width: 190px;
+  margin-top: 2px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+.story-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 860px;
+  margin: 28px auto 0;
+}
+.story-features li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 16px;
+  text-align: center;
+}
+.story-features li + li { border-left: 1px solid var(--border-hover); }
+.story-feature-title {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.story-feature-title.is-gold { color: var(--gold-dark); }
+.keep-case { text-transform: none; }
+.story-feature-detail {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+/* ══════════════════════════════════════
    TESTIMONIALS
 ══════════════════════════════════════ */
 .testimonials {
   padding: 96px 40px 64px;
-  background: var(--bg);
+  background: var(--bg-2);
 }
 .testimonials-header {
   text-align: center;
@@ -986,7 +1109,7 @@ h1, h2, h3, h4 {
 ══════════════════════════════════════ */
 .faq {
   padding: 96px 40px 80px;
-  background: var(--bg-2);
+  background: var(--bg);
   position: relative;
 }
 .faq-inner {
@@ -1341,6 +1464,10 @@ h1, h2, h3, h4 {
 
   /* Sections */
   .boxes      { padding: 80px 24px; }
+  .story        { padding: 80px 24px 56px; }
+  .story-visual { transform: none; }
+  .story-visual img { height: auto; width: min(100%, 380px); }
+  .story-callout { display: none; }
   .testimonials { padding: 80px 24px; }
   .faq        { padding: 80px 24px; }
   .footer     { padding: 36px 24px 22px; }
@@ -1395,6 +1522,9 @@ h1, h2, h3, h4 {
   .box-name { font-size: 1.6rem; }
 
   .carousel-track { grid-auto-columns: 85%; }
+  .story-features li { padding: 4px 8px; }
+  .story-feature-title { font-size: 0.64rem; letter-spacing: 0.12em; }
+  .story-feature-detail { font-size: 0.9rem; }
 
 
   .footer-legal { flex-direction: column; gap: 10px; }

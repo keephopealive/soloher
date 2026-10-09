@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import BoxSelector from './components/BoxSelector'
+import StorySection from './components/StorySection'
 import Testimonials from './components/Testimonials'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
@@ -50,6 +51,7 @@ function App() {
       }} />
       <Hero onSubscribe={() => goToBoxes('subscribe')} onOneTime={() => goToBoxes('oneTime')} />
       <BoxSelector onSelect={openModal} preset={boxPreset} />
+      <StorySection />
       <Testimonials />
       <FAQ />
       <Footer onOpenLegal={setLegalDoc} />
