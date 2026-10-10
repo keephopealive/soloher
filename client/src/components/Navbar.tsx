@@ -1,5 +1,14 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import wordmark from '../assets/logo-wordmark.webp'
+
+// Page sections in scroll order; shared by the navbar, phone menu and footer
+export const NAV_LINKS = [
+  { id: 'boxes', label: 'Our Boxes' },
+  { id: 'story', label: 'The Story' },
+  { id: 'testimonials', label: 'Reviews' },
+  { id: 'faq', label: 'FAQ' },
+]
 
 interface NavbarProps {
   onSubscribeClick: () => void
@@ -27,8 +36,9 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
       </a>
 
       <ul className="navbar-links">
-        <li><a href="#boxes" onClick={e => { e.preventDefault(); scrollTo('boxes') }}>Our Boxes</a></li>
-        <li><a href="#faq" onClick={e => { e.preventDefault(); scrollTo('faq') }}>FAQ</a></li>
+        {NAV_LINKS.map(({ id, label }) => (
+          <li key={id}><a href={`#${id}`} onClick={e => { e.preventDefault(); scrollTo(id) }}>{label}</a></li>
+        ))}
       </ul>
 
       <button className="navbar-cta" onClick={onSubscribeClick}>
@@ -45,23 +55,25 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
         <span />
       </button>
 
-      {menuOpen && (
+      {/* Rendered on <body>: the scrolled navbar's backdrop-filter would otherwise
+          confine this fixed overlay to the navbar's own box */}
+      {menuOpen && createPortal(
         <div style={{
           position: 'fixed',
           inset: 0,
           background: 'rgba(250,245,248,0.98)',
-          zIndex: 99,
+          zIndex: 150,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           gap: '40px',
         }}>
-          <button onClick={() => setMenuOpen(false)} style={{
+          <button onClick={() => setMenuOpen(false)} aria-label="Close menu" style={{
             position: 'absolute', top: 28, right: 28,
             color: 'var(--text)', fontSize: '1.4rem', background: 'none', border: 'none', cursor: 'pointer',
           }}>✕</button>
-          {[['boxes', 'Our Boxes'], ['faq', 'FAQ']].map(([id, label]) => (
+          {NAV_LINKS.map(({ id, label }) => (
             <button key={id} onClick={() => scrollTo(id)} style={{
               fontFamily: 'var(--font-serif)', fontSize: '2.2rem', color: 'var(--text)',
               background: 'none', border: 'none', cursor: 'pointer',
@@ -70,7 +82,8 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
           <button className="btn-primary" onClick={() => { setMenuOpen(false); onSubscribeClick() }}>
             Subscribe Now
           </button>
-        </div>
+        </div>,
+        document.body,
       )}
     </nav>
   )

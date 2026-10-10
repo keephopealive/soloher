@@ -1,5 +1,6 @@
 import type { LegalDoc } from './LegalModal'
 import logoFull from '../assets/logo-full.webp'
+import { NAV_LINKS } from './Navbar'
 
 interface FooterProps {
   onOpenLegal: (doc: LegalDoc) => void
@@ -17,8 +18,11 @@ export default function Footer({ onOpenLegal }: FooterProps) {
           <div className="footer-col">
             <h4>Explore</h4>
             <ul>
-              <li><a href="#boxes" onClick={e => { e.preventDefault(); document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' }) }}>Our Boxes</a></li>
-              <li><a href="#faq" onClick={e => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }) }}>FAQ</a></li>
+              {NAV_LINKS.map(({ id, label }) => (
+                <li key={id}>
+                  <a href={`#${id}`} onClick={e => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }) }}>{label}</a>
+                </li>
+              ))}
             </ul>
           </div>
 

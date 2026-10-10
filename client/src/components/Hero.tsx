@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import heroBox from '../assets/story-box.webp'
+import heroBox from '../assets/hero-box-flat.webp'
 
 interface HeroProps {
   onSubscribe: () => void
@@ -63,8 +63,8 @@ export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
         <figure className="hero-visual">
           <img
             src={heroBox}
-            width={950}
-            height={1095}
+            width={1386}
+            height={1006}
             alt="Open SoloHer box with a 375 ml bottle of wine, a lavender bath bomb and a SoloHer story book"
           />
         </figure>

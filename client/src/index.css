@@ -326,8 +326,8 @@ h1, h2, h3, h4 {
 .hero-visual img {
   position: relative;
   display: block;
-  height: min(62vh, 560px);
-  width: auto;
+  width: min(520px, 40vw);
+  height: auto;
   max-width: 100%;
   filter: drop-shadow(0 28px 34px rgba(46, 18, 32, 0.22)) drop-shadow(0 6px 10px rgba(46, 18, 32, 0.10));
 }
