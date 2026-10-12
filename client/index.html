@@ -3,6 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Apply the saved (or device) colour theme before the page paints, so dark mode never flashes light -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('soloher-theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="A curated ritual box for women: a premium wine, a luxury bath bomb and an original story, delivered discreetly each month." />
     <title>SoloHer | The Moment Is Yours.</title>

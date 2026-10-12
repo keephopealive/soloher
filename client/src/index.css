@@ -40,11 +40,78 @@
   --border-dark: rgba(251, 240, 245, 0.14);
   --border-dark-hover: rgba(251, 240, 245, 0.35);
 
+  /* Surfaces that used to be hard-coded (themeable) */
+  --hero-gradient: linear-gradient(150deg, #FAF5F8 0%, #F0DCEA 55%, #FAF5F8 100%);
+  --navbar-bg: rgba(250, 245, 248, 0.96);
+  --menu-bg: rgba(250, 245, 248, 0.98);
+  --overlay-bg: rgba(42, 16, 32, 0.72);
+  --age-gate-bg: rgba(42, 16, 32, 0.9);
+  --chip-bg: rgba(255, 255, 255, 0.85);
+  --photo-glow: rgba(196, 90, 122, 0.16);
+  --photo-shadow: rgba(46, 18, 32, 0.22);
+  --social-gradient: linear-gradient(150deg, #F7E6EF 0%, #EBCFDD 55%, #F3E3D0 100%);
+  --social-gradient-alt: linear-gradient(150deg, #F3E3D0 0%, #EAD3B4 55%, #F7E6EF 100%);
+  --logo-on-light: brightness(0.72) saturate(1.3) contrast(1.15);
+
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
   --max-w: 1160px;
   --radius: 2px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Dark theme: deep plum surfaces, brighter rose, same gold ─── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #1A0D15;
+  --bg-2: #241220;
+  --bg-card: #2C1626;
+  --bg-card-hover: #341A2D;
+
+  --bg-dark: #10070C;
+  --bg-dark-2: #1A0D15;
+
+  --rose: #E27F9E;
+  --rose-bright: #F0A3BC;
+  --rose-dark: #C45A7A;
+  --rose-faint: rgba(226, 127, 158, 0.14);
+
+  --gold-dark: #D8B87E;
+  --gold-faint: rgba(201, 169, 110, 0.18);
+
+  --text: #F7EAF1;
+  --text-dim: rgba(247, 234, 241, 0.68);
+  --text-faint: rgba(247, 234, 241, 0.40);
+
+  --border: rgba(226, 127, 158, 0.18);
+  --border-hover: rgba(226, 127, 158, 0.45);
+
+  --hero-gradient: linear-gradient(150deg, #1A0D15 0%, #3B1631 55%, #1A0D15 100%);
+  --navbar-bg: rgba(26, 13, 21, 0.92);
+  --menu-bg: #1A0D15;
+  --overlay-bg: rgba(8, 3, 6, 0.78);
+  --age-gate-bg: rgba(8, 3, 6, 0.92);
+  --chip-bg: rgba(26, 13, 21, 0.75);
+  --photo-glow: rgba(226, 127, 158, 0.30);
+  --photo-shadow: rgba(0, 0, 0, 0.55);
+  --social-gradient: linear-gradient(150deg, #3A1730 0%, #2A1222 55%, #3A2A1C 100%);
+  --social-gradient-alt: linear-gradient(150deg, #3A2A1C 0%, #2E2016 55%, #3A1730 100%);
+  --logo-on-light: none;
+}
+/* Dark mode: soft plum gradients on the flatter sections, echoing the hero */
+:root[data-theme="dark"] .story {
+  background: linear-gradient(180deg, #1A0D15 0%, #2E1328 50%, #1A0D15 100%);
+}
+:root[data-theme="dark"] .faq {
+  background: linear-gradient(160deg, #1A0D15 0%, #261122 60%, #1A0D15 100%);
+}
+
+/* Brief cross-fade while switching themes */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease, fill 0.45s ease, stroke 0.45s ease !important;
 }
 
 /* ─── Reset ─── */
@@ -188,7 +255,7 @@ h1, h2, h3, h4 {
   transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.3s ease, border-color 0.4s ease;
 }
 .navbar.scrolled {
-  background: rgba(250, 245, 248, 0.96);
+  background: var(--navbar-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 18px 48px;
@@ -208,7 +275,7 @@ h1, h2, h3, h4 {
 /* Deepen the gold on light backgrounds so it holds contrast */
 .navbar-wordmark img,
 .age-gate-logo {
-  filter: brightness(0.72) saturate(1.3) contrast(1.15);
+  filter: var(--logo-on-light);
 }
 .footer-logo {
   display: block;
@@ -246,6 +313,36 @@ h1, h2, h3, h4 {
   color: var(--rose);
   border-color: var(--rose);
 }
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+/* Light / dark switch */
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border-hover);
+  color: var(--text);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.theme-toggle:hover {
+  background: var(--rose-faint);
+  border-color: var(--rose);
+  color: var(--rose);
+}
+.theme-toggle svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .navbar-hamburger {
   display: none;
   flex-direction: column;
@@ -270,7 +367,7 @@ h1, h2, h3, h4 {
   align-items: center;
   overflow: hidden;
   padding: 0 40px;
-  background: linear-gradient(150deg, #FAF5F8 0%, #F0DCEA 55%, #FAF5F8 100%);
+  background: var(--hero-gradient);
   color: var(--text);
 }
 .hero-bg-glow {
@@ -319,7 +416,7 @@ h1, h2, h3, h4 {
   content: '';
   position: absolute;
   inset: -14% -18%;
-  background: radial-gradient(ellipse at center, rgba(196, 90, 122, 0.16) 0%, rgba(201, 169, 110, 0.08) 45%, transparent 70%);
+  background: radial-gradient(ellipse at center, var(--photo-glow) 0%, rgba(201, 169, 110, 0.08) 45%, transparent 70%);
   pointer-events: none;
 }
 /* Cut-out photo: no frame, a soft shadow that follows the box shape */
@@ -329,7 +426,7 @@ h1, h2, h3, h4 {
   height: min(62vh, 560px);
   width: auto;
   max-width: 100%;
-  filter: drop-shadow(0 28px 34px rgba(46, 18, 32, 0.22)) drop-shadow(0 6px 10px rgba(46, 18, 32, 0.10));
+  filter: drop-shadow(0 28px 34px var(--photo-shadow)) drop-shadow(0 6px 10px rgba(46, 18, 32, 0.10));
 }
 .hero-label {
   animation: heroUp 0.85s var(--ease-out) 0.15s both;
@@ -747,7 +844,7 @@ h1, h2, h3, h4 {
   width: 900px;
   height: 640px;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse, rgba(196, 90, 122, 0.10) 0%, rgba(201, 169, 110, 0.05) 45%, transparent 70%);
+  background: radial-gradient(ellipse, var(--photo-glow) 0%, rgba(201, 169, 110, 0.05) 45%, transparent 70%);
   pointer-events: none;
 }
 .story-header {
@@ -784,7 +881,7 @@ h1, h2, h3, h4 {
   display: block;
   height: min(50vh, 470px);
   width: auto;
-  filter: drop-shadow(0 26px 30px rgba(46, 18, 32, 0.20)) drop-shadow(0 6px 10px rgba(46, 18, 32, 0.08));
+  filter: drop-shadow(0 26px 30px var(--photo-shadow)) drop-shadow(0 6px 10px rgba(46, 18, 32, 0.08));
 }
 /* Gold line from the copy to a dot on the story book */
 .story-callout {
@@ -1020,17 +1117,17 @@ h1, h2, h3, h4 {
   aspect-ratio: 16 / 10;
   display: grid;
   place-items: center;
-  background: linear-gradient(150deg, #F7E6EF 0%, #EBCFDD 55%, #F3E3D0 100%);
+  background: var(--social-gradient);
 }
 .social-tiktok .social-media { background: linear-gradient(150deg, #2E1220 0%, #5A2440 60%, #C45A7A 100%); }
-.social-facebook .social-media { background: linear-gradient(150deg, #F3E3D0 0%, #EAD3B4 55%, #F7E6EF 100%); }
+.social-facebook .social-media { background: var(--social-gradient-alt); }
 .social-visual { font-size: 3rem; }
 .social-play {
   position: absolute;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--chip-bg);
   color: var(--text);
   display: grid;
   place-items: center;
@@ -1045,7 +1142,7 @@ h1, h2, h3, h4 {
   left: 12px;
   padding: 3px 8px;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--chip-bg);
   font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -1257,7 +1354,7 @@ h1, h2, h3, h4 {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(42, 16, 32, 0.72);
+  background: var(--overlay-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 200;
@@ -1396,7 +1493,7 @@ h1, h2, h3, h4 {
 /* Age gate: shown on first visit, cannot be dismissed without answering */
 .age-gate {
   z-index: 300;
-  background: rgba(42, 16, 32, 0.9);
+  background: var(--age-gate-bg);
 }
 .age-gate-modal {
   text-align: center;

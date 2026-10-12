@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import wordmark from '../assets/logo-wordmark.webp'
+import { useTheme } from '../hooks/useTheme'
 
 // Page sections in scroll order; shared by the navbar, phone menu and footer
 export const NAV_LINKS = [
@@ -17,6 +18,7 @@ interface NavbarProps {
 export default function Navbar({ onSubscribeClick }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const { theme, toggle: toggleTheme } = useTheme()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -41,19 +43,39 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
         ))}
       </ul>
 
-      <button className="navbar-cta" onClick={onSubscribeClick}>
-        Subscribe Now
-      </button>
+      <div className="navbar-actions">
+        <button
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        >
+          {theme === 'dark' ? (
+            <svg viewBox="0 0 24 24" aria-hidden>
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" aria-hidden>
+              <path d="M20 14.2A8 8 0 0 1 9.8 4a8 8 0 1 0 10.2 10.2Z" />
+            </svg>
+          )}
+        </button>
 
-      <button
-        className="navbar-hamburger"
-        onClick={() => setMenuOpen(o => !o)}
-        aria-label="Menu"
-      >
-        <span />
-        <span />
-        <span />
-      </button>
+        <button className="navbar-cta" onClick={onSubscribeClick}>
+          Subscribe Now
+        </button>
+
+        <button
+          className="navbar-hamburger"
+          onClick={() => setMenuOpen(o => !o)}
+          aria-label="Menu"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
 
       {/* Rendered on <body>: the scrolled navbar's backdrop-filter would otherwise
           confine this fixed overlay to the navbar's own box */}
@@ -61,7 +83,7 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
         <div style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(250,245,248,0.98)',
+          background: 'var(--menu-bg)',
           zIndex: 150,
           display: 'flex',
           flexDirection: 'column',
