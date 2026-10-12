@@ -18,10 +18,9 @@ export default function StorySection() {
       <div className="story-header reveal" ref={headerRef}>
         <span className="gold-label">An original story in every box</span>
         <h2>
-          Some stories are for everyone.<br />
-          <em>This one isn't.</em>
+          Some stories are meant to be shared.<br />
+          <em>This one is meant for you.</em>
         </h2>
-        <p>Written by real authors, only for SoloHer. A new one every month.</p>
       </div>
 
       <div className="story-stage reveal" ref={stageRef}>
