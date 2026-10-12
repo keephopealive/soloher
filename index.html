@@ -3,6 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/soloher/favicon.png" />
+    <!-- Apply the saved (or device) colour theme before the page paints, so dark mode never flashes light -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('soloher-theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="A curated ritual box for women: a premium wine, a luxury bath bomb and an original story, delivered discreetly each month." />
     <title>SoloHer | The Moment Is Yours.</title>
@@ -27,8 +39,8 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/soloher/assets/index-qmZySXnn.js"></script>
-    <link rel="stylesheet" crossorigin href="/soloher/assets/index-u8q5i9sJ.css">
+    <script type="module" crossorigin src="/soloher/assets/index-DEpuSl9j.js"></script>
+    <link rel="stylesheet" crossorigin href="/soloher/assets/index-KIr0jLIv.css">
   </head>
   <body>
     <!-- SVG filter: removes white backgrounds from PNG logos -->
