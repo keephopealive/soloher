@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react'
+import WaitlistForm from './WaitlistForm'
 import heroBox from '../assets/story-box.webp'
-
-interface HeroProps {
-  onSubscribe: () => void
-  onOneTime: () => void
-}
 
 const ROTATING_WORDS = ['Evening', 'Moment', 'Time']
 const ROTATE_INTERVAL_MS = 3000
 
-export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
+export default function Hero() {
   const [wordIndex, setWordIndex] = useState(0)
 
   useEffect(() => {
@@ -47,16 +43,12 @@ export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
           </p>
 
           <div className="hero-ctas">
-            <button className="btn-primary" onClick={onSubscribe}>
-              Start My Monthly Ritual · $99.99
-            </button>
-            <button className="btn-secondary" onClick={onOneTime}>
-              Gift One Ritual · $124.99
-            </button>
+            <WaitlistForm source="hero" />
           </div>
 
           <p className="hero-trust">
-            <span>Cancel anytime</span>
+            <span>Launching soon</span>
+            <span>No spam, unsubscribe anytime</span>
           </p>
         </div>
 

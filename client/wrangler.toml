@@ -1,0 +1,10 @@
+# Cloudflare Pages config for the pre-sale site (project "soloher").
+# The waitlist sign-up function (functions/api/waitlist.ts) saves emails to the D1 database below.
+name = "soloher"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-09-23"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "soloher-waitlist"
+database_id = "eead0937-adb1-4b2a-bc9b-c8fd142d4ab7"

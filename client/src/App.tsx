@@ -3,10 +3,9 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import BoxSelector from './components/BoxSelector'
 import StorySection from './components/StorySection'
-import Testimonials from './components/Testimonials'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
-import Modal from './components/Modal'
+import WaitlistModal from './components/WaitlistModal'
 import LegalModal, { type LegalDoc } from './components/LegalModal'
 import AgeGate from './components/AgeGate'
 
@@ -19,45 +18,23 @@ export interface ModalState {
   purchaseType: PurchaseType
 }
 
+// Pre-sale site: no checkout yet. Every call to action joins the waitlist.
 function App() {
-  const [modal, setModal] = useState<ModalState>({
-    open: false,
-    boxId: null,
-    purchaseType: 'subscribe',
-  })
+  const [waitlistSource, setWaitlistSource] = useState<string | null>(null)
   const [legalDoc, setLegalDoc] = useState<LegalDoc | null>(null)
-  // Hero buttons send visitors to the boxes with every card preset to their choice
-  const [boxPreset, setBoxPreset] = useState<{ type: PurchaseType; at: number } | null>(null)
 
-  const goToBoxes = (type: PurchaseType) => {
-    setBoxPreset({ type, at: Date.now() })
-    document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const openModal = (boxId: BoxId, purchaseType: PurchaseType) => {
-    setModal({ open: true, boxId, purchaseType })
-  }
-
-  const closeModal = () => {
-    setModal(prev => ({ ...prev, open: false }))
-  }
-
+  const closeWaitlist = useCallback(() => setWaitlistSource(null), [])
   const closeLegal = useCallback(() => setLegalDoc(null), [])
 
   return (
     <div className="app">
-      <Navbar onSubscribeClick={() => {
-        document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
-      }} />
-      <Hero onSubscribe={() => goToBoxes('subscribe')} onOneTime={() => goToBoxes('oneTime')} />
-      <BoxSelector onSelect={openModal} preset={boxPreset} />
+      <Navbar onSubscribeClick={() => setWaitlistSource('navbar')} />
+      <Hero />
+      <BoxSelector onJoin={source => setWaitlistSource(source)} />
       <StorySection />
-      <Testimonials />
       <FAQ />
       <Footer onOpenLegal={setLegalDoc} />
-      {modal.open && (
-        <Modal modal={modal} onClose={closeModal} />
-      )}
+      {waitlistSource && <WaitlistModal source={waitlistSource} onClose={closeWaitlist} />}
       {legalDoc && <LegalModal doc={legalDoc} onClose={closeLegal} />}
       <AgeGate />
     </div>

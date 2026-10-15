@@ -7,7 +7,6 @@ import { useTheme } from '../hooks/useTheme'
 export const NAV_LINKS = [
   { id: 'boxes', label: 'Our Boxes' },
   { id: 'story', label: 'The Story' },
-  { id: 'testimonials', label: 'Reviews' },
   { id: 'faq', label: 'FAQ' },
 ]
 
@@ -63,7 +62,7 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
         </button>
 
         <button className="navbar-cta" onClick={onSubscribeClick}>
-          Subscribe Now
+          Join Waitlist
         </button>
 
         <button
@@ -102,7 +101,7 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
             }}>{label}</button>
           ))}
           <button className="btn-primary" onClick={() => { setMenuOpen(false); onSubscribeClick() }}>
-            Subscribe Now
+            Join Waitlist
           </button>
         </div>,
         document.body,

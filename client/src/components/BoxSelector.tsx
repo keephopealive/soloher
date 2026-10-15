@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import type { BoxId, PurchaseType } from '../App'
+import type { BoxId } from '../App'
 
 interface BoxSelectorProps {
-  onSelect: (boxId: BoxId, purchaseType: PurchaseType) => void
-  preset: { type: PurchaseType; at: number } | null
+  /** Opens the waitlist; the box name is saved as the sign-up source */
+  onJoin: (source: string) => void
 }
 
 const BOXES = [
@@ -49,10 +48,6 @@ const BOXES = [
   },
 ]
 
-const PURCHASE_OPTIONS: { type: PurchaseType; label: string; badge?: string }[] = [
-  { type: 'subscribe', label: 'Monthly', badge: 'Save $25' },
-  { type: 'oneTime', label: 'One-time gift' },
-]
 
 function BookIcon() {
   return (
@@ -84,15 +79,9 @@ function BathBombIcon() {
   )
 }
 
-export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
-  // Each card keeps its own purchase choice; monthly is the default
-  const [choices, setChoices] = useState<Record<BoxId, PurchaseType>>({ 1: 'subscribe', 2: 'subscribe', 3: 'subscribe' })
+export default function BoxSelector({ onJoin }: BoxSelectorProps) {
   const headerRef = useScrollReveal<HTMLDivElement>()
   const gridRef = useScrollReveal<HTMLDivElement>(100)
-
-  useEffect(() => {
-    if (preset) setChoices({ 1: preset.type, 2: preset.type, 3: preset.type })
-  }, [preset])
 
   return (
     <section className="boxes" id="boxes">
@@ -136,38 +125,14 @@ export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
               </div>
             </div>
 
-            <div
-              className={`purchase-toggle${choices[box.id] === 'oneTime' ? ' is-one-time' : ''}`}
-              role="group"
-              aria-label={`Purchase options for ${box.name}`}
-            >
-              <span className="purchase-toggle-thumb" aria-hidden />
-              {PURCHASE_OPTIONS.map(opt => {
-                const active = choices[box.id] === opt.type
-                return (
-                  <button
-                    key={opt.type}
-                    className={`purchase-toggle-btn${active ? ' active' : ''}`}
-                    aria-pressed={active}
-                    onClick={() => setChoices(prev => ({ ...prev, [box.id]: opt.type }))}
-                  >
-                    <span className="purchase-toggle-label">{opt.label}</span>
-                    {opt.badge && <span className="purchase-toggle-badge">{opt.badge}</span>}
-                  </button>
-                )
-              })}
-            </div>
+            {/* Pre-sale: no checkout yet, every card leads to the waitlist */}
+            <div className="box-coming-soon">Launching soon</div>
 
-            <button
-              className="box-cta"
-              onClick={() => onSelect(box.id, choices[box.id])}
-            >
-              {choices[box.id] === 'subscribe' ? 'Subscribe · $99.99/mo' : 'Gift Once · $124.99'}
+            <button className="box-cta" onClick={() => onJoin(box.name)}>
+              Join the Waitlist
             </button>
 
-            <p className="box-cta-note">
-              {choices[box.id] === 'subscribe' ? 'Billed monthly · Cancel anytime' : 'One-time charge · No subscription'}
-            </p>
+            <p className="box-cta-note">Be the first to know when we launch.</p>
           </article>
         ))}
       </div>
