@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
+// GitHub Pages serves the site under /soloher/; Cloudflare Pages serves it at the root.
+// `vite build --mode cloudflare` picks the Cloudflare settings (see .env.cloudflare).
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: '/soloher/',
+  base: mode === 'cloudflare' ? '/' : '/soloher/',
   server: {
     port: 3000,
     // Polling catches rapid successive saves that the native Windows watcher can miss
@@ -15,4 +17,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

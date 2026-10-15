@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "build:cloudflare": "tsc && vite build --mode cloudflare",
+    "deploy:cloudflare": "npm run build:cloudflare && wrangler pages deploy dist --project-name soloher --branch main"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -19,6 +21,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "gh-pages": "^6.3.0",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "wrangler": "3.114.17"
   }
 }

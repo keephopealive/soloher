@@ -19,20 +19,20 @@
     <meta name="description" content="A curated ritual box for women: a premium wine, a luxury bath bomb and an original story, delivered discreetly each month." />
     <title>SoloHer | The Moment Is Yours.</title>
 
-    <!-- Link previews (social media, messages). Update the URLs if the site moves to its own domain. -->
+    <!-- Link previews (social media, messages). The site address comes from VITE_SITE_URL in .env.production / .env.cloudflare -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SoloHer" />
-    <meta property="og:url" content="https://keephopealive.github.io/soloher/" />
+    <meta property="og:url" content="%VITE_SITE_URL%" />
     <meta property="og:title" content="SoloHer | The Moment Is Yours." />
     <meta property="og:description" content="Three pleasures. One ritual. A premium wine, a luxury bath bomb and an original story, delivered discreetly each month." />
-    <meta property="og:image" content="https://keephopealive.github.io/soloher/og-image.jpg" />
+    <meta property="og:image" content="%VITE_SITE_URL%og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="SoloHer box with a bottle of wine, a lavender bath bomb and a story book" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="SoloHer | The Moment Is Yours." />
     <meta name="twitter:description" content="A premium wine, a luxury bath bomb and an original story, delivered discreetly each month." />
-    <meta name="twitter:image" content="https://keephopealive.github.io/soloher/og-image.jpg" />
+    <meta name="twitter:image" content="%VITE_SITE_URL%og-image.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
