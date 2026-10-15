@@ -42,8 +42,10 @@ export async function onRequestPost({ request, env }: Context): Promise<Response
   const source = typeof data.source === 'string' ? data.source.slice(0, 40) : null
 
   try {
-    // Signing up twice is fine: the second time is simply ignored
-    await env.DB.prepare('INSERT OR IGNORE INTO waitlist (email, source) VALUES (?, ?)')
+    // Signing up twice is fine. Joining again after unsubscribing re-subscribes the address.
+    await env.DB.prepare(
+      'INSERT INTO waitlist (email, source) VALUES (?, ?) ON CONFLICT(email) DO UPDATE SET unsubscribed_at = NULL',
+    )
       .bind(email, source)
       .run()
   } catch {
