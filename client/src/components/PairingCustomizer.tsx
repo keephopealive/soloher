@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { BATH_BOMBS, WINES, type Box, type Pairing, recommendedPairing } from '../data/products'
+import { BATH_BOMBS, WINES, WINE_TYPES, type Box, type Pairing, type Wine, recommendedPairing } from '../data/products'
+
+const typeSlug = (type: Wine['type']) => (type === 'Rosé' ? 'rose' : type.toLowerCase())
 
 interface PairingCustomizerProps {
   box: Box
@@ -53,26 +55,34 @@ export default function PairingCustomizer({ box, current, onSave, onClose }: Pai
 
         <fieldset className="customizer-group">
           <legend>Choose your wine</legend>
-          <div className="customizer-options">
-            {recommendedFirst(WINES, box.recommendedWine).map(w => (
-              <label key={w.id} className={`option-tile${wineId === w.id ? ' is-selected' : ''}`}>
-                <input
-                  type="radio"
-                  name={`wine-${box.id}`}
-                  value={w.id}
-                  checked={wineId === w.id}
-                  onChange={() => setWineId(w.id)}
-                />
-                <span className="option-top">
-                  <span className="option-type">{w.type}</span>
-                  {w.id === box.recommendedWine && <span className="option-badge">Recommended</span>}
-                </span>
-                <span className="option-name">{w.name}</span>
-                {w.origin && <span className="option-origin">{w.origin}</span>}
-                <span className="option-note">{w.note}</span>
-              </label>
-            ))}
-          </div>
+          {WINE_TYPES.map(type => (
+            <div key={type} className={`wine-category wine-${typeSlug(type)}`}>
+              <h3 className="wine-category-title">
+                <span className="wine-swatch" aria-hidden />
+                {type}
+              </h3>
+              <div className="customizer-options">
+                {recommendedFirst(WINES.filter(w => w.type === type), box.recommendedWine).map(w => (
+                  <label key={w.id} className={`option-tile option-wine${wineId === w.id ? ' is-selected' : ''}`}>
+                    <input
+                      type="radio"
+                      name={`wine-${box.id}`}
+                      value={w.id}
+                      checked={wineId === w.id}
+                      onChange={() => setWineId(w.id)}
+                      aria-label={`${w.type}: ${w.name}`}
+                    />
+                    {w.id === box.recommendedWine && (
+                      <span className="option-top"><span className="option-badge">Recommended</span></span>
+                    )}
+                    <span className="option-name">{w.name}</span>
+                    {w.origin && <span className="option-origin">{w.origin}</span>}
+                    <span className="option-note">{w.note}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          ))}
         </fieldset>
 
         <fieldset className="customizer-group">

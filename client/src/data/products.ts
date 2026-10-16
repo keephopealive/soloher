@@ -12,6 +12,9 @@ export interface Wine {
   note: string
 }
 
+/** Display order for wine categories in the customizer */
+export const WINE_TYPES: Wine['type'][] = ['Red', 'White', 'Rosé']
+
 export interface BathBomb {
   id: string
   name: string

@@ -44,42 +44,42 @@ how it is built and deployed, and the decisions behind it. **Keep it updated whe
 
 ## Page structure and features
 
-Section order: **hero → boxes → story → (testimonials, main only) → FAQ → footer**. Backgrounds alternate light/pink.
+Section order: **hero â†’ boxes â†’ story â†’ (testimonials, main only) â†’ FAQ â†’ footer**. Backgrounds alternate light/pink.
 
 ### Global
 - **Age gate** (`AgeGate.tsx`): full-screen 21+ check on first visit; "under 21" blocks with a go-back link; answer remembered in `localStorage` (`soloher-age-verified`).
 - **Dark mode** (`useTheme.ts`): sun/moon toggle in the navbar. Saved in `localStorage` (`soloher-theme`); first visit follows the device setting; inline script in `index.html` applies the theme before paint (no flash). Dark palette = `:root[data-theme="dark"]` variables in `index.css` (deep plum, brighter rose, same gold). Theme-able values (hero gradient, navbar/menu backgrounds, overlays, photo glow) are CSS variables; add new colors as variables, not hard-coded.
 - **Navbar**: SOLOHER wordmark image, links from shared `NAV_LINKS` (also used by the phone menu and footer), theme toggle, CTA button. Phone menu is rendered via a portal to `<body>` (the scrolled navbar's `backdrop-filter` otherwise traps it).
-- **Gentle scroll snapping** between sections on screens > 900px (`scroll-snap-type: y proximity`). Sections are sized to fit a 1440×900 screen.
+- **Gentle scroll snapping** between sections on screens > 900px (`scroll-snap-type: y proximity`). Sections are sized to fit a 1440Ã—900 screen.
 - **Legal popups** (`LegalModal.tsx`): Privacy Policy, Terms of Service, Age Verification from the footer. **Draft text, needs lawyer review**; mentions DOB at checkout and a discreet billing name that don't exist yet.
 - **Branding**: logo from the brand artwork in `client/src/assets/` (`logo-wordmark.webp` navbar, `logo-full.webp` footer/age gate); `public/favicon.png` is the plant mark. On light backgrounds the logo gold is deepened via `--logo-on-light`.
-- **Link previews**: `public/og-image.jpg` (1200×630), title "SoloHer | The Moment Is Yours.".
+- **Link previews**: `public/og-image.jpg` (1200Ã—630), title "SoloHer | The Moment Is Yours.".
 
 ### Hero
-- Headline "The ___ Is *Yours.*" with the word rotating Evening → Moment → Time every 3 s (crossfade; respects reduced motion).
+- Headline "The ___ Is *Yours.*" with the word rotating Evening â†’ Moment â†’ Time every 3 s (crossfade; respects reduced motion).
 - Product photo: `assets/story-box.webp` (complete open-box cut-out). The user tried and rejected a flat-lay alternative; earlier photo had a clipped corner.
-- Main: buttons "Start My Monthly Ritual · $99.99" and "Gift One Ritual · $124.99" scroll to the boxes with Monthly / One-time preselected. Pre-sale: inline waitlist email form.
+- Main: buttons "Start My Monthly Ritual Â· $99.99" and "Gift One Ritual Â· $124.99" scroll to the boxes with Monthly / One-time preselected. Pre-sale: inline waitlist email form.
 - "Discover" cue scrolls to the boxes.
 
 ### Boxes ("Choose Your Experience")
 - Three cards in `BoxSelector.tsx`. Rows align across cards via CSS subgrid (`.box-card` spans 10 shared rows; 11 where the pairing customizer is present).
 - **Catalog** (main site, from branch `main-updates`): `client/src/data/products.ts` holds all wines, bath bombs and boxes (recommended pairing per box). Cards, customizer and order modal read from it; add products there only.
-- **Pairing customizer** (main site): "Customize your pairing" on each card opens `PairingCustomizer.tsx` (story locked, wine and bath bomb as selectable tiles, recommended first with a badge, "Reset to recommended"). Card then shows a "Customized" tag, "Edit your pairing" and "Reset to recommended"; the order modal shows and sends the pairing. Defaults chosen for the sample: every box offers all wines / bath bombs, prices unchanged, choice not yet saved per subscriber month.
+- **Pairing customizer** (main site): "Customize your pairing" on each card opens `PairingCustomizer.tsx` (story locked, wines grouped under Red / White / Rosé headings with a color swatch and matching tile edge (--wine-red/white/rose), bath bombs as tiles, recommended first with a badge, "Reset to recommended"). Card then shows a "Customized" tag, "Edit your pairing" and "Reset to recommended"; the order modal shows and sends the pairing. Defaults chosen for the sample: every box offers all wines / bath bombs, prices unchanged, choice not yet saved per subscriber month.
 - Each card: mood, name, tagline, "Your story" panel, "Paired with" wine + bath bomb (gold SVG line icons, one-line notes).
 
 | Box | Mood | Story | Wine | Bath bomb |
 |---|---|---|---|---|
-| The Velvet Hour | Tender · Romantic | A slow-burn story of longing and surrender | King Estate Pinot Noir (red), Willamette Valley 2023 | Lavender Rosemary |
-| The Midnight Bloom | Bold · Confident | A story where desire meets its match | Chalk Hill Chardonnay (white) | Oatmeal Milk & Honey |
-| The Crimson Reverie | Deep · Adventurous | A tale of complete surrender and discovery | Whispering Angel Rosé, Château d'Esclans, Côtes de Provence 2025 | Honeysuckle |
+| The Velvet Hour | Tender Â· Romantic | A slow-burn story of longing and surrender | King Estate Pinot Noir (red), Willamette Valley 2023 | Lavender Rosemary |
+| The Midnight Bloom | Bold Â· Confident | A story where desire meets its match | Chalk Hill Chardonnay (white) | Oatmeal Milk & Honey |
+| The Crimson Reverie | Deep Â· Adventurous | A tale of complete surrender and discovery | Whispering Angel RosÃ©, ChÃ¢teau d'Esclans, CÃ´tes de Provence 2025 | Honeysuckle |
 
-- Inventory the user listed: King Estate Pinot (75), Justin Cabernet (50), Chalk Hill Chardonnay (40), Silverado Sauvignon Blanc (60), Whispering Angel (50), Hampton Water Rosé (35); bath bombs Lavender Rosemary (100), Oatmeal Milk & Honey (100), Honeysuckle (50), Cherry Almond (50). Tasting notes are general style notes, not from the wineries.
-- **Main**: per-card Monthly / One-time gift toggle ("Save $25" badge on Monthly); button "Subscribe · $99.99/mo" or "Gift Once · $124.99"; note "Billed monthly · Cancel anytime" / "One-time charge · No subscription". Clicking opens `Modal.tsx` (name + email); **no real checkout yet**.
+- Inventory the user listed: King Estate Pinot (75), Justin Cabernet (50), Chalk Hill Chardonnay (40), Silverado Sauvignon Blanc (60), Whispering Angel (50), Hampton Water RosÃ© (35); bath bombs Lavender Rosemary (100), Oatmeal Milk & Honey (100), Honeysuckle (50), Cherry Almond (50). Tasting notes are general style notes, not from the wineries.
+- **Main**: per-card Monthly / One-time gift toggle ("Save $25" badge on Monthly); button "Subscribe Â· $99.99/mo" or "Gift Once Â· $124.99"; note "Billed monthly Â· Cancel anytime" / "One-time charge Â· No subscription". Clicking opens `Modal.tsx` (name + email); **no real checkout yet**.
 - **Pre-sale**: "Launching soon" + "Join the Waitlist" (opens `WaitlistModal`, records the box name as source).
 - Prices: monthly $99.99, one-time $124.99.
 
 ### Story section
-- Headline "Some stories are meant to be shared. / *This one is meant for you.*"; photo with a gold callout to the book ("Original story / Written by real authors. Yours only." — unverified claim); features: Original story / 375 mL wine / Bath bomb.
+- Headline "Some stories are meant to be shared. / *This one is meant for you.*"; photo with a gold callout to the book ("Original story / Written by real authors. Yours only." â€” unverified claim); features: Original story / 375 mL wine / Bath bomb.
 
 ### Testimonials (main only)
 - Carousel mixing reviews and social posts with filter chips, arrows, gentle auto-advance (5 s, pauses on hover/touch, stops when the visitor interacts). **Reviews and "SAMPLE POST" social cards are placeholders**; removed on pre-sale (no customers yet).
@@ -91,7 +91,7 @@ Section order: **hero → boxes → story → (testimonials, main only) → FAQ 
 ## Waitlist and unsubscribe (Cloudflare)
 
 - **Account**: separate SoloHer Cloudflare account (soloherbox@gmail.com), fully separate from the user's other accounts. Wrangler is logged in on this machine.
-- **Database**: D1 `soloher-waitlist`, table `waitlist(id, email UNIQUE, source, created_at, unsubscribed_at)`. View in the dashboard: Storage & Databases → D1 → soloher-waitlist → Explore Data. Query: `npx wrangler d1 execute soloher-waitlist --remote --command "SELECT ..."`.
+- **Database**: D1 `soloher-waitlist`, table `waitlist(id, email UNIQUE, source, created_at, unsubscribed_at)`. View in the dashboard: Storage & Databases â†’ D1 â†’ soloher-waitlist â†’ Explore Data. Query: `npx wrangler d1 execute soloher-waitlist --remote --command "SELECT ..."`.
 - **Sign-up** (`functions/api/waitlist.ts`, presale only): validates email, lowercases, honeypot field `website` drops bots, re-joining clears `unsubscribed_at`.
 - **Unsubscribe** (`functions/api/unsubscribe.ts`, both branches): signed links `/api/unsubscribe?e=<email>&t=<HMAC>`; GET shows a confirm page (link scanners can't unsubscribe anyone), POST unsubscribes; supports RFC 8058 one-click. Secret `UNSUBSCRIBE_SECRET` is a Cloudflare Pages secret plus a local copy in `client/.dev.vars` (gitignored). Print a link: `node client/scripts/unsubscribe-link.mjs <email>`.
 - GitHub Pages can't run functions; email unsubscribe links point to soloher.pages.dev until launch.
