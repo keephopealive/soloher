@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
-import type { ModalState, BoxId } from '../App'
-
-const BOX_NAMES: Record<BoxId, string> = {
-  1: 'The Velvet Hour',
-  2: 'The Midnight Bloom',
-  3: 'The Crimson Reverie',
-}
+import type { ModalState } from '../App'
+import { bathBombById, boxById, isCustomized, wineById } from '../data/products'
 
 interface ModalProps {
   modal: ModalState
@@ -23,7 +18,11 @@ export default function Modal({ modal, onClose }: ModalProps) {
     return () => { document.body.style.overflow = '' }
   }, [])
 
-  const boxName = modal.boxId ? BOX_NAMES[modal.boxId] : ''
+  const box = modal.boxId ? boxById(modal.boxId) : null
+  const boxName = box?.name ?? ''
+  const wine = modal.pairing ? wineById(modal.pairing.wineId) : null
+  const bathBomb = modal.pairing ? bathBombById(modal.pairing.bathBombId) : null
+  const customized = box && modal.pairing ? isCustomized(box, modal.pairing) : false
   const isSubscribe = modal.purchaseType === 'subscribe'
   const price = isSubscribe ? '$99.99' : '$124.99'
   const period = isSubscribe ? '/month · cancel anytime' : 'one-time charge'
@@ -42,6 +41,8 @@ export default function Modal({ modal, onClose }: ModalProps) {
           email,
           box: boxName,
           purchaseType: modal.purchaseType,
+          wine: wine?.name,
+          bathBomb: bathBomb?.name,
         }),
       })
     } catch {
@@ -85,6 +86,16 @@ export default function Modal({ modal, onClose }: ModalProps) {
               <span className="modal-price">{price}</span>
               <span className="modal-price-note">{period}</span>
             </div>
+
+            {wine && bathBomb && (
+              <div className="modal-pairing">
+                <span className="modal-pairing-label">
+                  Your pairing{customized && <span className="box-customized-tag">Customized</span>}
+                </span>
+                <span>{wine.name}</span>
+                <span>{bathBomb.name} bath bomb</span>
+              </div>
+            )}
 
             <form className="modal-form" onSubmit={handleSubmit} noValidate>
               <input

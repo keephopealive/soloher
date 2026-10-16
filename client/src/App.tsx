@@ -10,13 +10,16 @@ import Modal from './components/Modal'
 import LegalModal, { type LegalDoc } from './components/LegalModal'
 import AgeGate from './components/AgeGate'
 
-export type BoxId = 1 | 2 | 3
+import type { BoxId, Pairing } from './data/products'
+export type { BoxId } from './data/products'
 export type PurchaseType = 'subscribe' | 'oneTime'
 
 export interface ModalState {
   open: boolean
   boxId: BoxId | null
   purchaseType: PurchaseType
+  /** Wine and bath bomb chosen on the card (recommended unless customized) */
+  pairing: Pairing | null
 }
 
 function App() {
@@ -24,6 +27,7 @@ function App() {
     open: false,
     boxId: null,
     purchaseType: 'subscribe',
+    pairing: null,
   })
   const [legalDoc, setLegalDoc] = useState<LegalDoc | null>(null)
   // Hero buttons send visitors to the boxes with every card preset to their choice
@@ -34,8 +38,8 @@ function App() {
     document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const openModal = (boxId: BoxId, purchaseType: PurchaseType) => {
-    setModal({ open: true, boxId, purchaseType })
+  const openModal = (boxId: BoxId, purchaseType: PurchaseType, pairing: Pairing) => {
+    setModal({ open: true, boxId, purchaseType, pairing })
   }
 
   const closeModal = () => {

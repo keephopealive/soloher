@@ -1,53 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import type { BoxId, PurchaseType } from '../App'
+import type { PurchaseType } from '../App'
+import {
+  BOXES, bathBombById, isCustomized, recommendedPairing, wineById,
+  type Box, type BoxId, type Pairing,
+} from '../data/products'
+import PairingCustomizer from './PairingCustomizer'
 
 interface BoxSelectorProps {
-  onSelect: (boxId: BoxId, purchaseType: PurchaseType) => void
+  onSelect: (boxId: BoxId, purchaseType: PurchaseType, pairing: Pairing) => void
   preset: { type: PurchaseType; at: number } | null
 }
-
-const BOXES = [
-  {
-    id: 1 as BoxId,
-    mood: 'Tender · Romantic',
-    name: 'The Velvet Hour',
-    tagline: 'For the woman who craves tenderness.',
-    storyTheme: 'A slow-burn story of longing and surrender',
-    wineType: 'Red wine',
-    wineName: 'King Estate Pinot Noir',
-    wineOrigin: 'Willamette Valley · 2023',
-    wineNote: 'Silky red cherry, raspberry and soft spice.',
-    bathBombName: 'Lavender Rosemary',
-    bathBombNote: 'Calming lavender with fresh, herbal rosemary.',
-  },
-  {
-    id: 2 as BoxId,
-    mood: 'Bold · Confident',
-    name: 'The Midnight Bloom',
-    tagline: 'For the woman who knows exactly what she wants.',
-    storyTheme: 'A story where desire meets its match',
-    wineType: 'White wine',
-    wineName: 'Chalk Hill Chardonnay',
-    wineOrigin: '',
-    wineNote: 'Ripe pear and golden apple with creamy vanilla.',
-    bathBombName: 'Oatmeal Milk & Honey',
-    bathBombNote: 'Creamy oat and golden honey, soft and comforting.',
-  },
-  {
-    id: 3 as BoxId,
-    mood: 'Deep · Adventurous',
-    name: 'The Crimson Reverie',
-    tagline: 'For the woman ready to go somewhere deeper.',
-    storyTheme: 'A tale of complete surrender and discovery',
-    wineType: 'Rosé wine',
-    wineName: 'Whispering Angel Rosé',
-    wineOrigin: "Château d'Esclans · Côtes de Provence · 2025",
-    wineNote: 'Dry and bright, with strawberry and white peach.',
-    bathBombName: 'Honeysuckle',
-    bathBombNote: 'Sweet, sunlit honeysuckle blossom.',
-  },
-]
 
 const PURCHASE_OPTIONS: { type: PurchaseType; label: string; badge?: string }[] = [
   { type: 'subscribe', label: 'Monthly', badge: 'Save $25' },
@@ -87,6 +50,11 @@ function BathBombIcon() {
 export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
   // Each card keeps its own purchase choice; monthly is the default
   const [choices, setChoices] = useState<Record<BoxId, PurchaseType>>({ 1: 'subscribe', 2: 'subscribe', 3: 'subscribe' })
+  // Each card starts on its recommended pairing; visitors can swap the wine and bath bomb
+  const [pairings, setPairings] = useState<Record<BoxId, Pairing>>(() =>
+    Object.fromEntries(BOXES.map(b => [b.id, recommendedPairing(b)])) as Record<BoxId, Pairing>,
+  )
+  const [customizing, setCustomizing] = useState<Box | null>(null)
   const headerRef = useScrollReveal<HTMLDivElement>()
   const gridRef = useScrollReveal<HTMLDivElement>(100)
 
@@ -104,7 +72,12 @@ export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
 
       {/* Cards share row tracks (subgrid), so each part lines up across all three */}
       <div className="boxes-grid" ref={gridRef}>
-        {BOXES.map((box, i) => (
+        {BOXES.map((box, i) => {
+          const pairing = pairings[box.id]
+          const wine = wineById(pairing.wineId)
+          const bathBomb = bathBombById(pairing.bathBombId)
+          const customized = isCustomized(box, pairing)
+          return (
           <article key={box.id} className={`box-card reveal reveal-d${i + 1}`}>
             <div className="box-mood">{box.mood}</div>
             <h3 className="box-name">{box.name}</h3>
@@ -120,10 +93,10 @@ export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
             <div className="box-item">
               <WineIcon />
               <div>
-                <span className="box-label">{box.wineType}</span>
-                <span className="box-item-name">{box.wineName}</span>
-                {box.wineOrigin && <span className="box-item-origin">{box.wineOrigin}</span>}
-                <span className="box-item-note">{box.wineNote}</span>
+                <span className="box-label">{wine.type} wine</span>
+                <span className="box-item-name">{wine.name}</span>
+                {wine.origin && <span className="box-item-origin">{wine.origin}</span>}
+                <span className="box-item-note">{wine.note}</span>
               </div>
             </div>
 
@@ -131,9 +104,24 @@ export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
               <BathBombIcon />
               <div>
                 <span className="box-label">Bath bomb</span>
-                <span className="box-item-name">{box.bathBombName}</span>
-                <span className="box-item-note">{box.bathBombNote}</span>
+                <span className="box-item-name">{bathBomb.name}</span>
+                <span className="box-item-note">{bathBomb.note}</span>
               </div>
+            </div>
+
+            <div className="box-customize">
+              {customized && <span className="box-customized-tag">Customized</span>}
+              <button className="box-customize-link" onClick={() => setCustomizing(box)}>
+                {customized ? 'Edit your pairing' : 'Customize your pairing'}
+              </button>
+              {customized && (
+                <button
+                  className="box-reset-link"
+                  onClick={() => setPairings(prev => ({ ...prev, [box.id]: recommendedPairing(box) }))}
+                >
+                  Reset to recommended
+                </button>
+              )}
             </div>
 
             <div
@@ -160,7 +148,7 @@ export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
 
             <button
               className="box-cta"
-              onClick={() => onSelect(box.id, choices[box.id])}
+              onClick={() => onSelect(box.id, choices[box.id], pairing)}
             >
               {choices[box.id] === 'subscribe' ? 'Subscribe · $99.99/mo' : 'Gift Once · $124.99'}
             </button>
@@ -169,8 +157,21 @@ export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
               {choices[box.id] === 'subscribe' ? 'Billed monthly · Cancel anytime' : 'One-time charge · No subscription'}
             </p>
           </article>
-        ))}
+          )
+        })}
       </div>
+
+      {customizing && (
+        <PairingCustomizer
+          box={customizing}
+          current={pairings[customizing.id]}
+          onClose={() => setCustomizing(null)}
+          onSave={p => {
+            setPairings(prev => ({ ...prev, [customizing.id]: p }))
+            setCustomizing(null)
+          }}
+        />
+      )}
     </section>
   )
 }

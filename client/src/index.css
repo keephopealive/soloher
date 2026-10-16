@@ -602,13 +602,13 @@ h1, h2, h3, h4 {
   max-width: var(--max-w);
   margin: 0 auto;
 }
-/* Each card spans 10 shared rows, so mood, name, story, items, toggle and
+/* Each card spans 11 shared rows, so mood, name, story, items, toggle and
    button line up across all three cards whatever their text length */
 .box-card {
   position: relative;
   display: grid;
   grid-template-rows: subgrid;
-  grid-row: span 10;
+  grid-row: span 11;
   row-gap: 0;
   padding: 26px 28px 24px;
   background: var(--bg-card);
@@ -711,7 +711,7 @@ h1, h2, h3, h4 {
   gap: 12px;
   margin-bottom: 12px;
 }
-.box-item + .box-item { margin-bottom: 18px; }
+.box-item + .box-item { margin-bottom: 8px; }
 .box-item .box-icon { margin-top: 1px; }
 .box-item-name {
   display: block;
@@ -719,6 +719,41 @@ h1, h2, h3, h4 {
   font-size: 1.05rem;
   line-height: 1.3;
   color: var(--text);
+}
+/* "Customize your pairing" row under the wine and bath bomb */
+.box-customize {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-bottom: 14px;
+  padding-left: 32px;
+}
+.box-customize-link,
+.box-reset-link {
+  padding: 0;
+  font-size: 0.74rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.box-customize-link {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--gold-dark);
+}
+.box-customize-link:hover { color: var(--rose); }
+.box-reset-link { color: var(--text-faint); }
+.box-reset-link:hover { color: var(--text-dim); }
+.box-customized-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--rose-faint);
+  color: var(--rose);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 .box-item-origin {
   display: block;
@@ -1430,6 +1465,192 @@ h1, h2, h3, h4 {
   color: var(--text-dim);
   letter-spacing: 0.04em;
 }
+/* Pairing summary in the order popup */
+.modal-pairing {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: -16px 0 28px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  color: var(--text);
+}
+.modal-pairing-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+  font-family: var(--font-sans);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+/* Pairing customizer */
+.customizer {
+  max-width: 760px;
+  max-height: 88vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 0;
+}
+.customizer-story {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 6px 0 26px;
+  padding: 14px 18px;
+  background: var(--rose-faint);
+  border-radius: var(--radius);
+}
+.customizer-lock svg {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  fill: none;
+  stroke: var(--rose);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.customizer-story-label {
+  display: block;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose);
+}
+.customizer-story p {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.customizer-group {
+  border: 0;
+  margin: 0 0 24px;
+  padding: 0;
+  min-width: 0;
+}
+.customizer-group legend {
+  margin-bottom: 12px;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  color: var(--text);
+}
+.customizer-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.option-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.option-tile:hover { border-color: rgba(201, 169, 110, 0.6); }
+.option-tile.is-selected {
+  border-color: var(--gold);
+  background: var(--gold-faint);
+  box-shadow: 0 0 0 1px var(--gold) inset;
+}
+/* Native radio kept for keyboard and screen readers, hidden visually */
+.option-tile input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.option-tile:has(input:focus-visible) {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.option-tile.is-selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--gold-dark);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.option-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 26px;
+}
+.option-type {
+  white-space: nowrap;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+.option-badge {
+  padding: 1px 7px;
+  border-radius: 100px;
+  background: var(--rose-faint);
+  color: var(--rose);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.option-name {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  line-height: 1.25;
+  color: var(--text);
+}
+.option-origin {
+  font-size: 0.68rem;
+  color: var(--text-faint);
+}
+.option-note {
+  margin-top: 2px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+.customizer-actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 8px -48px 0;
+  padding: 16px 48px 22px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+}
+.customizer-reset {
+  padding: 0;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.customizer-reset:hover { color: var(--text); }
+
 .modal-form {
   display: flex;
   flex-direction: column;
@@ -1602,6 +1823,8 @@ h1, h2, h3, h4 {
 
   /* Modal */
   .modal { padding: 40px 24px; }
+  .customizer-actions { margin: 8px -24px 0; padding: 14px 24px 18px; }
+  .customizer-options { grid-template-columns: 1fr; }
   .modal-title { font-size: 1.7rem; }
 
   .container { padding: 0 24px; }

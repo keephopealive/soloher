@@ -62,7 +62,9 @@ Section order: **hero → boxes → story → (testimonials, main only) → FAQ 
 - "Discover" cue scrolls to the boxes.
 
 ### Boxes ("Choose Your Experience")
-- Three cards in `BoxSelector.tsx`. Rows align across cards via CSS subgrid (`.box-card` spans 10 shared rows).
+- Three cards in `BoxSelector.tsx`. Rows align across cards via CSS subgrid (`.box-card` spans 10 shared rows; 11 where the pairing customizer is present).
+- **Catalog** (main site, from branch `main-updates`): `client/src/data/products.ts` holds all wines, bath bombs and boxes (recommended pairing per box). Cards, customizer and order modal read from it; add products there only.
+- **Pairing customizer** (main site): "Customize your pairing" on each card opens `PairingCustomizer.tsx` (story locked, wine and bath bomb as selectable tiles, recommended first with a badge, "Reset to recommended"). Card then shows a "Customized" tag, "Edit your pairing" and "Reset to recommended"; the order modal shows and sends the pairing. Defaults chosen for the sample: every box offers all wines / bath bombs, prices unchanged, choice not yet saved per subscriber month.
 - Each card: mood, name, tagline, "Your story" panel, "Paired with" wine + bath bomb (gold SVG line icons, one-line notes).
 
 | Box | Mood | Story | Wine | Bath bomb |
