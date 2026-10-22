@@ -12,7 +12,7 @@ const FAQS: { id: string; q: string; a: ReactNode[] }[] = [
   {
     id: 'packaging',
     q: 'Is the packaging discreet?',
-    a: ['Completely. Your SoloHer box ships in plain, unmarked packaging with no visible branding on the outside.'],
+    a: ['Completely. Your SoloHer box ships in plain packaging with no SoloHer branding on the outside of the shipping box.'],
   },
   {
     id: 'story',
@@ -23,31 +23,31 @@ const FAQS: { id: string; q: string; a: ReactNode[] }[] = [
     id: 'cancel',
     q: 'Can I cancel my subscription anytime?',
     a: [
-      'Yes. Cancel anytime before your next box ships, with no fees or penalties. Just log into your account and cancel before your next billing date. No hoops, no guilt-trip emails.',
+      'Yes. Cancel anytime before your next billing date, with no fees or penalties. Just log in to your account to cancel.',
       "If you prepaid for more than one month, we'll refund you for any months that haven't shipped yet.",
     ],
   },
   {
     id: 'options',
     q: 'Do the options change each month?',
-    a: ["Each month, we introduce new wines, bath bomb scents, and stories, so there's always something new to discover."],
+    a: ["For our curated boxes, each month brings a new story, paired with new wines and bath bomb scents, so there's always something new to discover."],
   },
   {
     id: 'delivery',
     q: 'How long until my box arrives?',
-    a: ['Delivery takes 3 to 7 business days, depending on your location. Holidays may affect delivery times.'],
+    a: ['Once your box ships, delivery typically takes 3 to 7 business days, depending on your location. Holidays, weather and carrier delays may affect delivery times.'],
   },
   {
     id: 'change-options',
     q: 'Can I change my box options each month?',
-    a: ['Yes. Before each billing date, you can pick a different box or swap your wine and bath bomb. Your changes apply to your next box.'],
+    a: ['Yes. Subscribers can pick a different box or swap their wine and bath bomb before each billing date. Changes apply to your next box.'],
   },
   {
     id: 'refunds',
     q: 'What is your refund policy?',
     a: [
       <>
-        Refunds aren't offered once a box has been delivered. If there's any issue with your box when it arrives,
+        Once a box has shipped, refunds aren't offered. If there's any issue with your box when it arrives,
         please reach out to our support team at <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> and
         we'll work with you to make it right.
       </>,

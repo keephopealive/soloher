@@ -44,7 +44,7 @@ const LEGAL_DOCS: Record<LegalDoc, { title: string; intro: string; sections: Leg
       },
       {
         heading: 'Shipping, returns and refunds',
-        body: ['We ship only where alcohol delivery is legal, and an adult 21+ must show ID to receive it. Refunds are not offered once a box is delivered. If there is an issue with your box, contact support and we will work with you to make it right.'],
+        body: ['We ship only where alcohol delivery is legal, and an adult 21+ must show ID to receive it. Refunds are not offered once a box has shipped. If there is an issue with your box, contact support and we will work with you to make it right.'],
       },
       {
         heading: 'Content and enjoyment',
