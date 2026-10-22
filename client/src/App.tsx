@@ -6,6 +6,7 @@ import StorySection from './components/StorySection'
 // Reviews are hidden for now; restore this import and <Testimonials /> below to bring them back
 // import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
+import AccountModal from './components/AccountModal'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
 import Modal from './components/Modal'
@@ -32,6 +33,8 @@ function App() {
     pairing: null,
   })
   const [legalDoc, setLegalDoc] = useState<LegalDoc | null>(null)
+  const [accountOpen, setAccountOpen] = useState(false)
+  const closeAccount = useCallback(() => setAccountOpen(false), [])
   // Hero buttons send visitors to the boxes with every card preset to their choice
   const [boxPreset, setBoxPreset] = useState<{ type: PurchaseType; at: number } | null>(null)
 
@@ -52,7 +55,7 @@ function App() {
 
   return (
     <div className="app">
-      <Navbar onSubscribeClick={() => {
+      <Navbar onLoginClick={() => setAccountOpen(true)} onSubscribeClick={() => {
         document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
       }} />
       <Hero onSubscribe={() => goToBoxes('subscribe')} onOneTime={() => goToBoxes('oneTime')} />
@@ -61,11 +64,12 @@ function App() {
       {/* <Testimonials /> hidden for now (placeholder reviews) */}
       <FAQ />
       <Contact />
-      <Footer onOpenLegal={setLegalDoc} />
+      <Footer onOpenLegal={setLegalDoc} onAccountClick={() => setAccountOpen(true)} />
       {modal.open && (
         <Modal modal={modal} onClose={closeModal} />
       )}
       {legalDoc && <LegalModal doc={legalDoc} onClose={closeLegal} />}
+      {accountOpen && <AccountModal onClose={closeAccount} />}
       <AgeGate />
     </div>
   )

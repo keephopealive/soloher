@@ -14,7 +14,7 @@ interface Context {
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const TOPICS = ['General question', 'My order', 'Gifting', 'Press or partnerships']
+const TOPICS = ['General question', 'My order', 'My account', 'Press or partnerships']
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {

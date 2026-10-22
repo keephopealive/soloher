@@ -14,9 +14,10 @@ export const NAV_LINKS = [
 
 interface NavbarProps {
   onSubscribeClick: () => void
+  onLoginClick: () => void
 }
 
-export default function Navbar({ onSubscribeClick }: NavbarProps) {
+export default function Navbar({ onSubscribeClick, onLoginClick }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { theme, toggle: toggleTheme } = useTheme()
@@ -63,6 +64,11 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
           )}
         </button>
 
+        <button className="navbar-login" onClick={onLoginClick} aria-label="Log in">
+          <svg viewBox="0 0 24 24" aria-hidden><circle cx="12" cy="8.5" r="3.8" /><path d="M4.5 20c1.2-3.6 4.1-5.4 7.5-5.4s6.3 1.8 7.5 5.4" /></svg>
+          <span>Log in</span>
+        </button>
+
         <button className="navbar-cta" onClick={onSubscribeClick}>
           Subscribe Now
         </button>
@@ -102,6 +108,10 @@ export default function Navbar({ onSubscribeClick }: NavbarProps) {
               background: 'none', border: 'none', cursor: 'pointer',
             }}>{label}</button>
           ))}
+          <button onClick={() => { setMenuOpen(false); onLoginClick() }} style={{
+            fontFamily: 'var(--font-sans)', fontSize: '0.85rem', letterSpacing: '0.14em', textTransform: 'uppercase',
+            color: 'var(--text-dim)', background: 'none', border: 'none', cursor: 'pointer',
+          }}>Log in</button>
           <button className="btn-primary" onClick={() => { setMenuOpen(false); onSubscribeClick() }}>
             Subscribe Now
           </button>

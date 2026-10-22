@@ -1,12 +1,14 @@
 import type { LegalDoc } from './LegalModal'
 import logoFull from '../assets/logo-full.webp'
 import { NAV_LINKS } from './Navbar'
+import { openFaq } from './FAQ'
 
 interface FooterProps {
   onOpenLegal: (doc: LegalDoc) => void
+  onAccountClick: () => void
 }
 
-export default function Footer({ onOpenLegal }: FooterProps) {
+export default function Footer({ onOpenLegal, onAccountClick }: FooterProps) {
   return (
     <footer className="footer">
       <div className="footer-top">
@@ -18,7 +20,8 @@ export default function Footer({ onOpenLegal }: FooterProps) {
           <div className="footer-col">
             <h4>Explore</h4>
             <ul>
-              {NAV_LINKS.map(({ id, label }) => (
+              {/* Contact is already under Support as "Contact Us" */}
+              {NAV_LINKS.filter(l => l.id !== 'contact').map(({ id, label }) => (
                 <li key={id}>
                   <a href={`#${id}`} onClick={e => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }) }}>{label}</a>
                 </li>
@@ -31,17 +34,16 @@ export default function Footer({ onOpenLegal }: FooterProps) {
             <ul>
               <li><a href="#contact" onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}>Contact Us</a></li>
               <li><a href="#">Shipping Info</a></li>
-              <li><a href="#">Returns</a></li>
-              <li><a href="#">My Account</a></li>
+              <li><a href="#faq-refunds" onClick={e => { e.preventDefault(); openFaq('refunds') }}>Returns/Exchanges</a></li>
+              <li><a href="#" onClick={e => { e.preventDefault(); onAccountClick() }}>My Account</a></li>
             </ul>
           </div>
 
           <div className="footer-col">
             <h4>Follow</h4>
             <ul>
-              <li><a href="#">Instagram</a></li>
-              <li><a href="#">TikTok</a></li>
-              <li><a href="#">Pinterest</a></li>
+              <li><a href="https://www.instagram.com/soloherbox/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+              <li><a href="https://www.tiktok.com/@soloherbox" target="_blank" rel="noopener noreferrer">TikTok</a></li>
             </ul>
           </div>
         </div>

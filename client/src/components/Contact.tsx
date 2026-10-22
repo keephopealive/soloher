@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
-const TOPICS = ['General question', 'My order', 'Gifting', 'Press or partnerships']
+const TOPICS = ['General question', 'My order', 'My account', 'Press or partnerships']
 
 type Status = 'idle' | 'sending' | 'done' | 'error'
 

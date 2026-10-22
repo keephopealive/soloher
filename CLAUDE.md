@@ -49,7 +49,7 @@ Section order: **hero → boxes → story → FAQ → contact (main only) → fo
 ### Global
 - **Age gate** (`AgeGate.tsx`): full-screen 21+ check on first visit; "under 21" blocks with a go-back link; answer remembered in `localStorage` (`soloher-age-verified`).
 - **Dark mode** (`useTheme.ts`): sun/moon toggle in the navbar. Saved in `localStorage` (`soloher-theme`); first visit follows the device setting; inline script in `index.html` applies the theme before paint (no flash). Dark palette = `:root[data-theme="dark"]` variables in `index.css` (deep plum, brighter rose, same gold). Theme-able values (hero gradient, navbar/menu backgrounds, overlays, photo glow) are CSS variables; add new colors as variables, not hard-coded.
-- **Navbar**: SOLOHER wordmark image, links from shared `NAV_LINKS` (main: Boxes · Experience · FAQ · Contact; Experience = story section) (also used by the phone menu and footer), theme toggle, CTA button. Phone menu is rendered via a portal to `<body>` (the scrolled navbar's `backdrop-filter` otherwise traps it).
+- **Navbar**: SOLOHER wordmark image, links from shared `NAV_LINKS` (main: Boxes · Experience · FAQ · Contact; Experience = story section) (also used by the phone menu and footer), theme toggle, "Log in" button (icon only on phones; also in the phone menu), CTA button. Log in and footer "My Account" open `AccountModal.tsx`, an "Accounts are coming soon" placeholder with the support email (main only). Phone menu is rendered via a portal to `<body>` (the scrolled navbar's `backdrop-filter` otherwise traps it).
 - **Gentle scroll snapping** between sections on screens > 900px (`scroll-snap-type: y proximity`). Sections are sized to fit a 1440×900 screen.
 - **Legal popups** (`LegalModal.tsx`): Privacy Policy, Terms of Service, Age Verification from the footer. **Draft text, needs lawyer review**; mentions DOB at checkout and a discreet billing name that don't exist yet.
 - **Branding**: logo from the brand artwork in `client/src/assets/` (`logo-wordmark.webp` navbar, `logo-full.webp` footer/age gate); `public/favicon.png` is the plant mark. On light backgrounds the logo gold is deepened via `--logo-on-light`.
@@ -85,11 +85,12 @@ Section order: **hero → boxes → story → FAQ → contact (main only) → fo
 - Carousel mixing reviews and social posts with filter chips, arrows, gentle auto-advance (5 s, pauses on hover/touch, stops when the visitor interacts). **Reviews and "SAMPLE POST" social cards are placeholders**; removed on pre-sale (no customers yet).
 
 ### Contact (main only)
-- `Contact.tsx`, last section: intro + form (name, email, topic, message, honeypot `website`). Posts to `/api/contact`: Cloudflare function `functions/api/contact.ts` saves to D1 table `contact_messages` (schema `db/contact-schema.sql`); locally the Express server logs it. On GitHub Pages the form can't send (no functions) and shows an error. Footer "Contact Us" links here. No notification email to the team yet.
+- `Contact.tsx`, last section: intro + form (name, email, topic, message, honeypot `website`; topics General question / My order / My account / Press or partnerships). Posts to `/api/contact`: Cloudflare function `functions/api/contact.ts` saves to D1 table `contact_messages` (schema `db/contact-schema.sql`); locally the Express server logs it. On GitHub Pages the form can't send (no functions) and shows an error. Footer "Contact Us" links here. No notification email to the team yet.
 
 ### FAQ, footer
 - FAQ accordion (`FAQ.tsx`), answers are arrays of paragraphs. Main site has the user-approved copy (packaging, story, cancel + prepaid refund, options change monthly, delivery 3 to 7 business days, change box options, refund policy). Presale FAQ still has the old copy. Cancel/change answers assume customer accounts (not built yet); Terms of Service should be updated to match the refund policy.
-- Footer: full logo, Explore (shared nav links), Support, Follow, legal links.
+- Footer: full logo, Explore (shared nav links minus Contact), Support (Contact Us, Shipping Info, Returns/Exchanges opens the refund FAQ via `openFaq('refunds')`, My Account), Follow (Instagram/TikTok @soloherbox, new tab), legal links.
+- Support email `support@soloherbox.com` (`SUPPORT_EMAIL` in `FAQ.tsx`), linked in the refund answer and account popup; inbox not confirmed to exist yet.
 
 ## Waitlist and unsubscribe (Cloudflare)
 

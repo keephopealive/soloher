@@ -355,6 +355,28 @@ h1, h2, h3, h4 {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* Log in (opens the account popup until customer accounts exist) */
+.navbar-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 4px;
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+.navbar-login:hover { color: var(--rose); }
+.navbar-login svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
 .navbar-hamburger {
   display: none;
   flex-direction: column;
@@ -1316,6 +1338,13 @@ h1, h2, h3, h4 {
   color: var(--text-dim);
 }
 .faq-answer p + p { margin-top: 10px; }
+.faq-answer a,
+.modal-subtitle a {
+  color: var(--rose);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.account-close { width: 100%; }
 
 /* ══════════════════════════════════════
    CONTACT
@@ -1903,6 +1932,7 @@ h1, h2, h3, h4 {
   .navbar.scrolled { padding: 14px 24px; }
   .navbar-links { display: none; }
   .navbar-cta { display: none; }
+  .navbar-login span { display: none; }
   .navbar-hamburger { display: flex; }
 
   /* Hero */
