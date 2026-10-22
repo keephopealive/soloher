@@ -29,7 +29,7 @@ export default function Footer({ onOpenLegal }: FooterProps) {
           <div className="footer-col">
             <h4>Support</h4>
             <ul>
-              <li><a href="#">Contact Us</a></li>
+              <li><a href="#contact" onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}>Contact Us</a></li>
               <li><a href="#">Shipping Info</a></li>
               <li><a href="#">Returns</a></li>
               <li><a href="#">My Account</a></li>

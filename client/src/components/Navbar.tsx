@@ -5,10 +5,11 @@ import { useTheme } from '../hooks/useTheme'
 
 // Page sections in scroll order; shared by the navbar, phone menu and footer
 export const NAV_LINKS = [
-  { id: 'boxes', label: 'Our Boxes' },
-  { id: 'story', label: 'The Story' },
-  { id: 'testimonials', label: 'Reviews' },
+  { id: 'boxes', label: 'Boxes' },
+  { id: 'story', label: 'Experience' },
+  // { id: 'testimonials', label: 'Reviews' }, hidden with the reviews section
   { id: 'faq', label: 'FAQ' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 interface NavbarProps {

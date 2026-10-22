@@ -3,7 +3,9 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import BoxSelector from './components/BoxSelector'
 import StorySection from './components/StorySection'
-import Testimonials from './components/Testimonials'
+// Reviews are hidden for now; restore this import and <Testimonials /> below to bring them back
+// import Testimonials from './components/Testimonials'
+import Contact from './components/Contact'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
 import Modal from './components/Modal'
@@ -56,8 +58,9 @@ function App() {
       <Hero onSubscribe={() => goToBoxes('subscribe')} onOneTime={() => goToBoxes('oneTime')} />
       <BoxSelector onSelect={openModal} preset={boxPreset} />
       <StorySection />
-      <Testimonials />
+      {/* <Testimonials /> hidden for now (placeholder reviews) */}
       <FAQ />
+      <Contact />
       <Footer onOpenLegal={setLegalDoc} />
       {modal.open && (
         <Modal modal={modal} onClose={closeModal} />

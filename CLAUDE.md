@@ -44,12 +44,12 @@ how it is built and deployed, and the decisions behind it. **Keep it updated whe
 
 ## Page structure and features
 
-Section order: **hero → boxes → story → (testimonials, main only) → FAQ → footer**. Backgrounds alternate light/pink.
+Section order: **hero → boxes → story → FAQ → contact (main only) → footer**. Testimonials are hidden on both sites (main: commented out in `App.tsx` and `NAV_LINKS`, easy to restore). Backgrounds alternate light/pink.
 
 ### Global
 - **Age gate** (`AgeGate.tsx`): full-screen 21+ check on first visit; "under 21" blocks with a go-back link; answer remembered in `localStorage` (`soloher-age-verified`).
 - **Dark mode** (`useTheme.ts`): sun/moon toggle in the navbar. Saved in `localStorage` (`soloher-theme`); first visit follows the device setting; inline script in `index.html` applies the theme before paint (no flash). Dark palette = `:root[data-theme="dark"]` variables in `index.css` (deep plum, brighter rose, same gold). Theme-able values (hero gradient, navbar/menu backgrounds, overlays, photo glow) are CSS variables; add new colors as variables, not hard-coded.
-- **Navbar**: SOLOHER wordmark image, links from shared `NAV_LINKS` (also used by the phone menu and footer), theme toggle, CTA button. Phone menu is rendered via a portal to `<body>` (the scrolled navbar's `backdrop-filter` otherwise traps it).
+- **Navbar**: SOLOHER wordmark image, links from shared `NAV_LINKS` (main: Boxes · Experience · FAQ · Contact; Experience = story section) (also used by the phone menu and footer), theme toggle, CTA button. Phone menu is rendered via a portal to `<body>` (the scrolled navbar's `backdrop-filter` otherwise traps it).
 - **Gentle scroll snapping** between sections on screens > 900px (`scroll-snap-type: y proximity`). Sections are sized to fit a 1440×900 screen.
 - **Legal popups** (`LegalModal.tsx`): Privacy Policy, Terms of Service, Age Verification from the footer. **Draft text, needs lawyer review**; mentions DOB at checkout and a discreet billing name that don't exist yet.
 - **Branding**: logo from the brand artwork in `client/src/assets/` (`logo-wordmark.webp` navbar, `logo-full.webp` footer/age gate); `public/favicon.png` is the plant mark. On light backgrounds the logo gold is deepened via `--logo-on-light`.
@@ -81,8 +81,11 @@ Section order: **hero → boxes → story → (testimonials, main only) → FAQ 
 ### Story section
 - Headline "Some stories are meant to be shared. / *This one is meant for you.*"; photo with a gold callout to the book ("Original story / Written by real authors. Yours only." — unverified claim); features: Original story / 375 mL wine / Bath bomb.
 
-### Testimonials (main only)
+### Testimonials (hidden for now)
 - Carousel mixing reviews and social posts with filter chips, arrows, gentle auto-advance (5 s, pauses on hover/touch, stops when the visitor interacts). **Reviews and "SAMPLE POST" social cards are placeholders**; removed on pre-sale (no customers yet).
+
+### Contact (main only)
+- `Contact.tsx`, last section: intro + form (name, email, topic, message, honeypot `website`). Posts to `/api/contact`: Cloudflare function `functions/api/contact.ts` saves to D1 table `contact_messages` (schema `db/contact-schema.sql`); locally the Express server logs it. On GitHub Pages the form can't send (no functions) and shows an error. Footer "Contact Us" links here. No notification email to the team yet.
 
 ### FAQ, footer
 - FAQ accordion (`FAQ.tsx`); some answers may need updating to match the fixed box pairings.
