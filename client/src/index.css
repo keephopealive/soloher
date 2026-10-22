@@ -1307,7 +1307,7 @@ h1, h2, h3, h4 {
   transition: max-height 0.4s var(--ease-out), padding 0.4s ease;
 }
 .faq-item.open .faq-answer {
-  max-height: 300px;
+  max-height: 480px;
   padding-bottom: 24px;
 }
 .faq-answer p {
@@ -1315,6 +1315,7 @@ h1, h2, h3, h4 {
   line-height: 1.8;
   color: var(--text-dim);
 }
+.faq-answer p + p { margin-top: 10px; }
 
 /* ══════════════════════════════════════
    CONTACT

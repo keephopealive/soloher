@@ -1,30 +1,38 @@
 import { useState } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
-const FAQS = [
+// Each answer is one or more paragraphs
+const FAQS: { q: string; a: string[] }[] = [
   {
     q: 'Is the packaging discreet?',
-    a: "Completely. Your SoloHer box ships in plain, unmarked packaging with no visible branding on the outside. Your bank statement will show a neutral company name. Only you know what's inside.",
+    a: ['Completely. Your SoloHer box ships in plain, unmarked packaging with no visible branding on the outside.'],
   },
   {
     q: 'What exactly is the short story?',
-    a: "Each story is an original work of intimate fiction written specifically for women, by women. They are sensual, empowering, and beautifully crafted. Think literary erotica: real characters, real tension, and writing that respects your intelligence.",
+    a: ['Each story is an original work of intimate fiction written specifically for women. They are sensual, intentional, and beautifully crafted. Literary erotica with defined characters, steamy tension, and writing that allows you to escape, even if just for a moment.'],
   },
   {
     q: 'Can I cancel my subscription anytime?',
-    a: "Yes, cancel with zero fees or penalties at any time. Log into your account and cancel before your next billing date. No hoops, no guilt-trip emails.",
+    a: [
+      'Yes. Cancel anytime before your next box ships, with no fees or penalties. Just log into your account and cancel before your next billing date. No hoops, no guilt-trip emails.',
+      "If you prepaid for more than one month, we'll refund you for any months that haven't shipped yet.",
+    ],
   },
   {
-    q: 'Do the wines change each month?',
-    a: "For subscribers, yes. Each month brings new wine selections within your chosen tier. One-time purchasers receive the current seasonal curation. Every selection is chosen by our sommelier partner to complement the mood of the box.",
+    q: 'Do the options change each month?',
+    a: ["Each month, we introduce new wines, bath bomb scents, and stories, so there's always something new to discover."],
   },
   {
     q: 'How long until my box arrives?',
-    a: "Orders ship within 2 business days. Delivery takes 3-7 business days depending on your location. Subscribers receive a tracking notification the moment their box ships.",
+    a: ['Delivery takes 3 to 7 business days, depending on your location. Holidays may affect delivery times.'],
   },
   {
-    q: 'Can I switch my box tier?',
-    a: "Absolutely. Log into your account and update your preference before the next billing cycle. You can switch tiers as often as you like.",
+    q: 'Can I change my box options each month?',
+    a: ['Yes. Before each billing date, you can pick a different box or swap your wine and bath bomb. Your changes apply to your next box.'],
+  },
+  {
+    q: 'What is your refund policy?',
+    a: ["Refunds aren't offered once a box has been delivered. If there's any issue with your box when it arrives, please reach out to our support team and we'll work with you to make it right."],
   },
 ]
 
@@ -58,7 +66,7 @@ export default function FAQ() {
                 </span>
               </button>
               <div className="faq-answer" aria-hidden={open !== i}>
-                <p>{faq.a}</p>
+                {faq.a.map((para, p) => <p key={p}>{para}</p>)}
               </div>
             </div>
           ))}

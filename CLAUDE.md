@@ -88,7 +88,7 @@ Section order: **hero → boxes → story → FAQ → contact (main only) → fo
 - `Contact.tsx`, last section: intro + form (name, email, topic, message, honeypot `website`). Posts to `/api/contact`: Cloudflare function `functions/api/contact.ts` saves to D1 table `contact_messages` (schema `db/contact-schema.sql`); locally the Express server logs it. On GitHub Pages the form can't send (no functions) and shows an error. Footer "Contact Us" links here. No notification email to the team yet.
 
 ### FAQ, footer
-- FAQ accordion (`FAQ.tsx`); some answers may need updating to match the fixed box pairings.
+- FAQ accordion (`FAQ.tsx`), answers are arrays of paragraphs. Main site has the user-approved copy (packaging, story, cancel + prepaid refund, options change monthly, delivery 3 to 7 business days, change box options, refund policy). Presale FAQ still has the old copy. Cancel/change answers assume customer accounts (not built yet); Terms of Service should be updated to match the refund policy.
 - Footer: full logo, Explore (shared nav links), Support, Follow, legal links.
 
 ## Waitlist and unsubscribe (Cloudflare)
