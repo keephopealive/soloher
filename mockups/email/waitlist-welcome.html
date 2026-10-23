@@ -6,7 +6,6 @@
 
   Before sending for real:
   - Host email-logo.png at a public https URL and use that URL in the <img> below
-  - Replace {{MAILING_ADDRESS}} (US law requires a postal address in marketing email)
   - {{UNSUBSCRIBE_URL}} = the person's signed link from server-lib/unsubscribe-token.ts (unsubscribeUrl),
     e.g. https://soloher.pages.dev/api/unsubscribe?e=...&t=...  (or: node client/scripts/unsubscribe-link.mjs <email>)
   - Also send headers  List-Unsubscribe: <that same URL>  and  List-Unsubscribe-Post: List-Unsubscribe=One-Click
@@ -98,7 +97,7 @@
               <p style="margin:0 0 6px;">
                 <a href="{{UNSUBSCRIBE_URL}}" style="color:#E2C48A;text-decoration:underline;">Unsubscribe</a>
               </p>
-              <p style="margin:0;color:#8E7584;">{{MAILING_ADDRESS}}</p>
+              <p style="margin:0;color:#8E7584;">100 N HOWARD ST #STE R, Spokane, WA, 99201, USA</p>
             </td>
           </tr>
 
