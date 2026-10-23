@@ -104,7 +104,7 @@ Section order: **hero → boxes → story → FAQ → contact → footer**. Test
 - **Sign-up** (`functions/api/waitlist.ts`, used by the waitlist version; local Express stub logs sign-ups): validates email, lowercases, honeypot field `website` drops bots, re-joining clears `unsubscribed_at`.
 - **Unsubscribe** (`functions/api/unsubscribe.ts`): signed links `/api/unsubscribe?e=<email>&t=<HMAC>`; GET shows a confirm page (link scanners can't unsubscribe anyone), POST unsubscribes; supports RFC 8058 one-click. Secret `UNSUBSCRIBE_SECRET` is a Cloudflare Pages secret plus a local copy in `client/.dev.vars` (gitignored). Print a link: `node client/scripts/unsubscribe-link.mjs <email>`.
 - GitHub Pages can't run functions; email unsubscribe links point to soloher.pages.dev until launch.
-- **No emails are sent yet.** Draft welcome email: `mockups/email/` (mailing address: 100 N HOWARD ST #STE R, Spokane, WA, 99201, USA; still needs a domain, a sending service like Resend, and the per-person `{{UNSUBSCRIBE_URL}}`). Any sending code must add the unsubscribe link + `List-Unsubscribe` headers and skip unsubscribed addresses.
+- **No emails are sent yet.** Draft welcome email: `mockups/email/` (logo served from `client/public/email-logo.png` at https://soloher.pages.dev/email-logo.png; mailing address: 100 N HOWARD ST #STE R, Spokane, WA, 99201, USA; still needs a domain, a sending service like Resend, and the per-person `{{UNSUBSCRIBE_URL}}`). Any sending code must add the unsubscribe link + `List-Unsubscribe` headers and skip unsubscribed addresses.
 - Test entry `deploy-check@soloher-test.invalid` is in the live list (user chose to keep it).
 
 ## Gotchas learned
