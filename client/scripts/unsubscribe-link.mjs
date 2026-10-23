@@ -5,7 +5,7 @@ import { createHmac } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 
 const email = (process.argv[2] ?? '').trim().toLowerCase()
-const siteUrl = (process.argv[3] ?? 'https://soloher.pages.dev').replace(/\/$/, '')
+const siteUrl = (process.argv[3] ?? 'https://www.soloherbox.com').replace(/\/$/, '')
 if (!email) {
   console.error('Usage: node scripts/unsubscribe-link.mjs someone@example.com [siteUrl]')
   process.exit(1)

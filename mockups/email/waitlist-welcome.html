@@ -7,7 +7,7 @@
   Before sending for real:
   - Logo is served from the site (client/public/email-logo.png); update the URL if the domain changes
   - {{UNSUBSCRIBE_URL}} = the person's signed link from server-lib/unsubscribe-token.ts (unsubscribeUrl),
-    e.g. https://soloher.pages.dev/api/unsubscribe?e=...&t=...  (or: node client/scripts/unsubscribe-link.mjs <email>)
+    e.g. https://www.soloherbox.com/api/unsubscribe?e=...&t=...  (or: node client/scripts/unsubscribe-link.mjs <email>)
   - Also send headers  List-Unsubscribe: <that same URL>  and  List-Unsubscribe-Post: List-Unsubscribe=One-Click
     so Gmail / Apple Mail show their own one-click Unsubscribe button
   - Built with tables and inline styles on purpose: email apps (Gmail, Outlook) ignore most modern CSS
@@ -33,7 +33,7 @@
           <!-- Header -->
           <tr>
             <td align="center" style="background:#2E1220;background-image:linear-gradient(150deg,#2E1220 0%,#4A1F3A 55%,#2E1220 100%);padding:40px 24px 34px;">
-              <img src="https://soloher.pages.dev/email-logo.png" width="120" height="124" alt="SoloHer" style="display:block;border:0;width:120px;height:auto;" />
+              <img src="https://www.soloherbox.com/email-logo.png" width="120" height="124" alt="SoloHer" style="display:block;border:0;width:120px;height:auto;" />
             </td>
           </tr>
 

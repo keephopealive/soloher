@@ -33,7 +33,7 @@ export async function verifyUnsubscribeToken(secret: string, email: string, toke
   return diff === 0
 }
 
-/** Full link to put in an email, e.g. https://soloher.pages.dev/api/unsubscribe?e=...&t=... */
+/** Full link to put in an email, e.g. https://www.soloherbox.com/api/unsubscribe?e=...&t=... */
 export async function unsubscribeUrl(siteUrl: string, secret: string, email: string): Promise<string> {
   const e = normalizeEmail(email)
   const t = await unsubscribeToken(secret, e)

@@ -12,7 +12,7 @@ calls to action differ, set by `VITE_SALES_MODE` (read in `client/src/config.ts`
 | | Waitlist version (public now) | Selling version (testing) |
 |---|---|---|
 | `VITE_SALES_MODE` | `waitlist` (in `.env.cloudflare`) | unset / `sell` |
-| Live at | https://soloher.pages.dev (Cloudflare Pages, project `soloher`) | https://keephopealive.github.io/soloher (GitHub Pages) |
+| Live at | https://www.soloherbox.com (Cloudflare Pages project `soloher`, also soloher.pages.dev) | https://keephopealive.github.io/soloher (GitHub Pages) |
 | Calls to action | Hero email form, navbar + box cards open `WaitlistModal` | Subscribe / Gift buttons, order `Modal.tsx` (no real checkout yet) |
 | Deploy (in `client/`) | `npm run deploy:cloudflare` | `npm run deploy` |
 | Local preview | `npm run dev:waitlist` (port 3002, launch entry `soloher-waitlist`) | `npm run dev` (port 3000) |
@@ -21,6 +21,12 @@ calls to action differ, set by `VITE_SALES_MODE` (read in `client/src/config.ts`
 - `deploy:cloudflare` only runs on `master` (`scripts/check-branch.mjs`).
 - **Launch day**: set `VITE_SALES_MODE=sell` in `.env.cloudflare`, run `npm run deploy:cloudflare`, then attach the custom domain.
 - The old `presale` branch is retired (kept for history; its old site code no longer gets updates).
+
+## Domain (soloherbox.com, registered and DNS at GoDaddy)
+
+- `www` is a CNAME to `soloher.pages.dev`, added as a custom domain on the Cloudflare Pages project (set up 2026-10-23).
+- Bare `soloherbox.com` (A `@`) still points to an old GoDaddy Website Builder site; plan: GoDaddy Forwarding (301, forward only) to https://www.soloherbox.com.
+- **Don't touch**: `qr` CNAME to dns-soloher.liquorpilot.com (QR code, plus its `_...qr` acm-validation record), `pay` (GoDaddy paylinks), other `_...acm-validations.aws` records, Google Workspace email records (MX, SPF/TXT, `google._domainkey`, `_dmarc`).
 
 ## Working rules (from the user)
 
@@ -103,8 +109,8 @@ Section order: **hero → boxes → story → FAQ → contact → footer**. Test
 - **Database**: D1 `soloher-waitlist`, table `waitlist(id, email UNIQUE, source, created_at, unsubscribed_at)`. View in the dashboard: Storage & Databases → D1 → soloher-waitlist → Explore Data. Query: `npx wrangler d1 execute soloher-waitlist --remote --command "SELECT ..."`.
 - **Sign-up** (`functions/api/waitlist.ts`, used by the waitlist version; local Express stub logs sign-ups): validates email, lowercases, honeypot field `website` drops bots, re-joining clears `unsubscribed_at`.
 - **Unsubscribe** (`functions/api/unsubscribe.ts`): signed links `/api/unsubscribe?e=<email>&t=<HMAC>`; GET shows a confirm page (link scanners can't unsubscribe anyone), POST unsubscribes; supports RFC 8058 one-click. Secret `UNSUBSCRIBE_SECRET` is a Cloudflare Pages secret plus a local copy in `client/.dev.vars` (gitignored). Print a link: `node client/scripts/unsubscribe-link.mjs <email>`.
-- GitHub Pages can't run functions; email unsubscribe links point to soloher.pages.dev until launch.
-- **No emails are sent yet.** Draft welcome email: `mockups/email/` (logo served from `client/public/email-logo.png` at https://soloher.pages.dev/email-logo.png; mailing address: 100 N HOWARD ST #STE R, Spokane, WA, 99201, USA; still needs a domain, a sending service like Resend, and the per-person `{{UNSUBSCRIBE_URL}}`). Any sending code must add the unsubscribe link + `List-Unsubscribe` headers and skip unsubscribed addresses.
+- GitHub Pages can't run functions; email unsubscribe links point to www.soloherbox.com (the Cloudflare site).
+- **No emails are sent yet.** Draft welcome email: `mockups/email/` (logo served from `client/public/email-logo.png` at https://www.soloherbox.com/email-logo.png; mailing address: 100 N HOWARD ST #STE R, Spokane, WA, 99201, USA; still needs a sending service like Resend, and the per-person `{{UNSUBSCRIBE_URL}}`). Any sending code must add the unsubscribe link + `List-Unsubscribe` headers and skip unsubscribed addresses.
 - Test entry `deploy-check@soloher-test.invalid` is in the live list (user chose to keep it).
 
 ## Gotchas learned
