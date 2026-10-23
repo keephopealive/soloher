@@ -1,0 +1,34 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "soloher-api",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:server"
+      ],
+      "port": 3001
+    },
+    {
+      "name": "soloher",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:client"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "soloher-waitlist",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:waitlist",
+        "--prefix",
+        "client"
+      ],
+      "port": 3002
+    }
+  ]
+}

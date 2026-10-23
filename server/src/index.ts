@@ -35,6 +35,18 @@ app.post('/api/subscribe', (req: Request, res: Response) => {
   res.json({ success: true })
 })
 
+// Local stand-in for the Cloudflare /api/waitlist function (sign-ups are only logged here)
+app.post('/api/waitlist', (req: Request, res: Response) => {
+  const { email, source, website } = req.body as Record<string, string | undefined>
+  if (website) { res.json({ ok: true }); return }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    res.status(400).json({ ok: false, error: 'Please enter a valid email address.' })
+    return
+  }
+  console.log(`[Waitlist] ${email.toLowerCase()} (${source ?? 'unknown'})`)
+  res.json({ ok: true })
+})
+
 // Local stand-in for the Cloudflare /api/contact function (messages are only logged here)
 app.post('/api/contact', (req: Request, res: Response) => {
   const { name, email, topic, message } = req.body as Record<string, string | undefined>

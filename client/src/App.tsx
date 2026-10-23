@@ -10,8 +10,10 @@ import AccountModal from './components/AccountModal'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
 import Modal from './components/Modal'
+import WaitlistModal from './components/WaitlistModal'
 import LegalModal, { type LegalDoc } from './components/LegalModal'
 import AgeGate from './components/AgeGate'
+import { WAITLIST_MODE } from './config'
 
 import type { BoxId, Pairing } from './data/products'
 export type { BoxId } from './data/products'
@@ -52,14 +54,18 @@ function App() {
   }
 
   const closeLegal = useCallback(() => setLegalDoc(null), [])
+  // Waitlist version: every call to action opens the waitlist; the source is saved with the email
+  const [waitlistSource, setWaitlistSource] = useState<string | null>(null)
+  const closeWaitlist = useCallback(() => setWaitlistSource(null), [])
 
   return (
     <div className="app">
       <Navbar onLoginClick={() => setAccountOpen(true)} onSubscribeClick={() => {
-        document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
+        if (WAITLIST_MODE) setWaitlistSource('navbar')
+        else document.getElementById('boxes')?.scrollIntoView({ behavior: 'smooth' })
       }} />
       <Hero onSubscribe={() => goToBoxes('subscribe')} onOneTime={() => goToBoxes('oneTime')} />
-      <BoxSelector onSelect={openModal} preset={boxPreset} />
+      <BoxSelector onSelect={openModal} onJoin={setWaitlistSource} preset={boxPreset} />
       <StorySection />
       {/* <Testimonials /> hidden for now (placeholder reviews) */}
       <FAQ />
@@ -68,6 +74,7 @@ function App() {
       {modal.open && (
         <Modal modal={modal} onClose={closeModal} />
       )}
+      {waitlistSource && <WaitlistModal source={waitlistSource} onClose={closeWaitlist} />}
       {legalDoc && <LegalModal doc={legalDoc} onClose={closeLegal} />}
       {accountOpen && <AccountModal onClose={closeAccount} />}
       <AgeGate />

@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:waitlist": "vite --mode waitlist --port 3002",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist",
     "build:cloudflare": "tsc && vite build --mode cloudflare",
-    "deploy:cloudflare": "node scripts/check-branch.mjs presale && npm run build:cloudflare && wrangler pages deploy dist --project-name soloher --branch main"
+    "deploy:cloudflare": "node scripts/check-branch.mjs master && npm run build:cloudflare && wrangler pages deploy dist --project-name soloher --branch main"
   },
   "dependencies": {
     "react": "^18.2.0",

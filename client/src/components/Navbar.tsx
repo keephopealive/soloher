@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import wordmark from '../assets/logo-wordmark.webp'
 import { useTheme } from '../hooks/useTheme'
+import { WAITLIST_MODE } from '../config'
+
+const CTA_LABEL = WAITLIST_MODE ? 'Join the Waitlist' : 'Subscribe Now'
 
 // Page sections in scroll order; shared by the navbar, phone menu and footer
 export const NAV_LINKS = [
@@ -70,7 +73,7 @@ export default function Navbar({ onSubscribeClick, onLoginClick }: NavbarProps) 
         </button>
 
         <button className="navbar-cta" onClick={onSubscribeClick}>
-          Subscribe Now
+          {CTA_LABEL}
         </button>
 
         <button
@@ -113,7 +116,7 @@ export default function Navbar({ onSubscribeClick, onLoginClick }: NavbarProps) 
             color: 'var(--text-dim)', background: 'none', border: 'none', cursor: 'pointer',
           }}>Log in</button>
           <button className="btn-primary" onClick={() => { setMenuOpen(false); onSubscribeClick() }}>
-            Subscribe Now
+            {CTA_LABEL}
           </button>
         </div>,
         document.body,

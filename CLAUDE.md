@@ -4,18 +4,23 @@ SoloHer is a subscription box for women: each box pairs a 375 mL wine, a bath bo
 original short story around a mood. This file is the source of truth for what the site does,
 how it is built and deployed, and the decisions behind it. **Keep it updated when features change.**
 
-## Two sites, two branches
+## One codebase, two versions
 
-| | Pre-sale site (public now) | Main site (ready to sell, testing) |
+Both versions are built from `master` (work on `main-updates`, then merge). Everything is shared; only the
+calls to action differ, set by `VITE_SALES_MODE` (read in `client/src/config.ts` as `WAITLIST_MODE`).
+
+| | Waitlist version (public now) | Selling version (testing) |
 |---|---|---|
-| Branch | `presale` | `master` |
+| `VITE_SALES_MODE` | `waitlist` (in `.env.cloudflare`) | unset / `sell` |
 | Live at | https://soloher.pages.dev (Cloudflare Pages, project `soloher`) | https://keephopealive.github.io/soloher (GitHub Pages) |
-| Calls to action | "Join the Waitlist" (email capture) | Subscribe / Gift One Ritual (checkout not built yet) |
-| Deploy | `npm run deploy:cloudflare` (in `client/`) | `npm run deploy` (in `client/`) |
+| Calls to action | Hero email form, navbar + box cards open `WaitlistModal` | Subscribe / Gift buttons, order `Modal.tsx` (no real checkout yet) |
+| Deploy (in `client/`) | `npm run deploy:cloudflare` | `npm run deploy` |
+| Local preview | `npm run dev:waitlist` (port 3002, launch entry `soloher-waitlist`) | `npm run dev` (port 3000) |
 
-- The user edits each branch separately. **Always confirm which site a change is for**; copy a change to the other branch only when asked.
-- Launch plan: when selling starts, `master` replaces `presale` on Cloudflare (remove the branch guard in `client/scripts/check-branch.mjs` / the `deploy:cloudflare` script, deploy `master`, then attach the custom domain).
-- `deploy:cloudflare` refuses to run unless on `presale` (guard is on both branches) so the main site can't go public early.
+- Waitlist version per component: Hero shows `WaitlistForm`; box cards show "Launching soon", "Join the Waitlist" (box name saved as source) and the prices as a note, replacing the Monthly/One-time toggle; navbar CTA reads "Join the Waitlist". Customizer, Log in, FAQ, Contact, footer and legal popups are identical.
+- `deploy:cloudflare` only runs on `master` (`scripts/check-branch.mjs`).
+- **Launch day**: set `VITE_SALES_MODE=sell` in `.env.cloudflare`, run `npm run deploy:cloudflare`, then attach the custom domain.
+- The old `presale` branch is retired (kept for history; its old site code no longer gets updates).
 
 ## Working rules (from the user)
 
@@ -44,7 +49,7 @@ how it is built and deployed, and the decisions behind it. **Keep it updated whe
 
 ## Page structure and features
 
-Section order: **hero → boxes → story → FAQ → contact (main only) → footer**. Testimonials are hidden on both sites (main: commented out in `App.tsx` and `NAV_LINKS`, easy to restore). Backgrounds alternate light/pink.
+Section order: **hero → boxes → story → FAQ → contact → footer**. Testimonials are hidden on both sites (main: commented out in `App.tsx` and `NAV_LINKS`, easy to restore). Backgrounds alternate light/pink.
 
 ### Global
 - **Age gate** (`AgeGate.tsx`): full-screen 21+ check on first visit; "under 21" blocks with a go-back link; answer remembered in `localStorage` (`soloher-age-verified`).
@@ -96,8 +101,8 @@ Section order: **hero → boxes → story → FAQ → contact (main only) → fo
 
 - **Account**: separate SoloHer Cloudflare account (soloherbox@gmail.com), fully separate from the user's other accounts. Wrangler is logged in on this machine.
 - **Database**: D1 `soloher-waitlist`, table `waitlist(id, email UNIQUE, source, created_at, unsubscribed_at)`. View in the dashboard: Storage & Databases → D1 → soloher-waitlist → Explore Data. Query: `npx wrangler d1 execute soloher-waitlist --remote --command "SELECT ..."`.
-- **Sign-up** (`functions/api/waitlist.ts`, presale only): validates email, lowercases, honeypot field `website` drops bots, re-joining clears `unsubscribed_at`.
-- **Unsubscribe** (`functions/api/unsubscribe.ts`, both branches): signed links `/api/unsubscribe?e=<email>&t=<HMAC>`; GET shows a confirm page (link scanners can't unsubscribe anyone), POST unsubscribes; supports RFC 8058 one-click. Secret `UNSUBSCRIBE_SECRET` is a Cloudflare Pages secret plus a local copy in `client/.dev.vars` (gitignored). Print a link: `node client/scripts/unsubscribe-link.mjs <email>`.
+- **Sign-up** (`functions/api/waitlist.ts`, used by the waitlist version; local Express stub logs sign-ups): validates email, lowercases, honeypot field `website` drops bots, re-joining clears `unsubscribed_at`.
+- **Unsubscribe** (`functions/api/unsubscribe.ts`): signed links `/api/unsubscribe?e=<email>&t=<HMAC>`; GET shows a confirm page (link scanners can't unsubscribe anyone), POST unsubscribes; supports RFC 8058 one-click. Secret `UNSUBSCRIBE_SECRET` is a Cloudflare Pages secret plus a local copy in `client/.dev.vars` (gitignored). Print a link: `node client/scripts/unsubscribe-link.mjs <email>`.
 - GitHub Pages can't run functions; email unsubscribe links point to soloher.pages.dev until launch.
 - **No emails are sent yet.** Draft welcome email: `mockups/email/` (needs a domain, a sending service like Resend, `{{UNSUBSCRIBE_URL}}`, and a postal address). Any sending code must add the unsubscribe link + `List-Unsubscribe` headers and skip unsubscribed addresses.
 - Test entry `deploy-check@soloher-test.invalid` is in the live list (user chose to keep it).

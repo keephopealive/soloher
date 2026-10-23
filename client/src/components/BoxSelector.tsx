@@ -6,9 +6,12 @@ import {
   type Box, type BoxId, type Pairing,
 } from '../data/products'
 import PairingCustomizer from './PairingCustomizer'
+import { WAITLIST_MODE } from '../config'
 
 interface BoxSelectorProps {
   onSelect: (boxId: BoxId, purchaseType: PurchaseType, pairing: Pairing) => void
+  /** Waitlist version: opens the waitlist; the box name is saved as the sign-up source */
+  onJoin: (source: string) => void
   preset: { type: PurchaseType; at: number } | null
 }
 
@@ -47,7 +50,7 @@ function BathBombIcon() {
   )
 }
 
-export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
+export default function BoxSelector({ onSelect, onJoin, preset }: BoxSelectorProps) {
   // Each card keeps its own purchase choice; monthly is the default
   const [choices, setChoices] = useState<Record<BoxId, PurchaseType>>({ 1: 'subscribe', 2: 'subscribe', 3: 'subscribe' })
   // Each card starts on its recommended pairing; visitors can swap the wine and bath bomb
@@ -124,6 +127,14 @@ export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
               )}
             </div>
 
+            {WAITLIST_MODE ? (
+              <>
+                <div className="box-coming-soon">Launching soon</div>
+                <button className="box-cta" onClick={() => onJoin(box.name)}>Join the Waitlist</button>
+                <p className="box-cta-note">Monthly $99.99 · One-time gift $124.99</p>
+              </>
+            ) : (
+            <>
             <div
               className={`purchase-toggle${choices[box.id] === 'oneTime' ? ' is-one-time' : ''}`}
               role="group"
@@ -156,6 +167,8 @@ export default function BoxSelector({ onSelect, preset }: BoxSelectorProps) {
             <p className="box-cta-note">
               {choices[box.id] === 'subscribe' ? 'Billed monthly · Cancel anytime' : 'One-time charge · No subscription'}
             </p>
+            </>
+            )}
           </article>
           )
         })}

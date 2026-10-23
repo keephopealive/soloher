@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import WaitlistForm from './WaitlistForm'
+import { WAITLIST_MODE } from '../config'
 import heroBox from '../assets/story-box.webp'
 
 interface HeroProps {
@@ -46,18 +48,31 @@ export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
             Three pleasures. One ritual. Delivered discreetly to your door each month.
           </p>
 
-          <div className="hero-ctas">
-            <button className="btn-primary" onClick={onSubscribe}>
-              Start My Monthly Ritual · $99.99
-            </button>
-            <button className="btn-secondary" onClick={onOneTime}>
-              Gift One Ritual · $124.99
-            </button>
-          </div>
-
-          <p className="hero-trust">
-            <span>Cancel anytime</span>
-          </p>
+          {WAITLIST_MODE ? (
+            <>
+              <div className="hero-ctas">
+                <WaitlistForm source="hero" />
+              </div>
+              <p className="hero-trust">
+                <span>Launching soon</span>
+                <span>No spam, unsubscribe anytime</span>
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="hero-ctas">
+                <button className="btn-primary" onClick={onSubscribe}>
+                  Start My Monthly Ritual · $99.99
+                </button>
+                <button className="btn-secondary" onClick={onOneTime}>
+                  Gift One Ritual · $124.99
+                </button>
+              </div>
+              <p className="hero-trust">
+                <span>Cancel anytime</span>
+              </p>
+            </>
+          )}
         </div>
 
         <figure className="hero-visual">
