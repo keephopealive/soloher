@@ -1,16 +1,19 @@
 // Cloudflare Pages Function: POST /api/waitlist  { email, source?, website? }
-// Saves a pre-sale waitlist email to the D1 database bound as DB (see wrangler.toml).
+// Saves a waitlist email to the D1 database bound as DB (see wrangler.toml) and sends the
+// welcome email to new sign-ups (server-lib/welcome-email.ts).
+import { sendWelcomeEmail, type WelcomeEnv } from '../../server-lib/welcome-email'
 
 interface D1PreparedStatement {
   bind(...values: unknown[]): D1PreparedStatement
   run(): Promise<{ meta: { changes: number } }>
 }
-interface Env {
+interface Env extends WelcomeEnv {
   DB: { prepare(query: string): D1PreparedStatement }
 }
 interface Context {
   request: Request
   env: Env
+  waitUntil(promise: Promise<unknown>): void
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
@@ -22,7 +25,7 @@ function json(body: unknown, status = 200) {
   })
 }
 
-export async function onRequestPost({ request, env }: Context): Promise<Response> {
+export async function onRequestPost({ request, env, waitUntil }: Context): Promise<Response> {
   let data: { email?: unknown; source?: unknown; website?: unknown }
   try {
     data = await request.json()
@@ -41,16 +44,22 @@ export async function onRequestPost({ request, env }: Context): Promise<Response
   }
   const source = typeof data.source === 'string' ? data.source.slice(0, 40) : null
 
+  let added: boolean
   try {
     // Signing up twice is fine. Joining again after unsubscribing re-subscribes the address.
-    await env.DB.prepare(
-      'INSERT INTO waitlist (email, source) VALUES (?, ?) ON CONFLICT(email) DO UPDATE SET unsubscribed_at = NULL',
+    // changes = 1 for a new or returning address, 0 if it was already on the list.
+    const result = await env.DB.prepare(
+      'INSERT INTO waitlist (email, source) VALUES (?, ?) ON CONFLICT(email) DO UPDATE SET unsubscribed_at = NULL WHERE unsubscribed_at IS NOT NULL',
     )
       .bind(email, source)
       .run()
+    added = result.meta.changes > 0
   } catch {
     return json({ ok: false, error: 'Something went wrong. Please try again.' }, 500)
   }
+
+  // Welcome email goes out in the background, only once per subscription
+  if (added) waitUntil(sendWelcomeEmail(env, email).catch(err => console.error('Welcome email error', err)))
 
   return json({ ok: true })
 }
