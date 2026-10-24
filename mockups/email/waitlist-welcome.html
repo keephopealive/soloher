@@ -18,8 +18,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light only" />
   <title>You're on the SoloHer waitlist</title>
+  <style>
+    /* Stop Gmail / Apple Mail from turning the postal address into a blue map link */
+    u + #body a, #MessageViewBody a { color: inherit; text-decoration: none; font-size: inherit; font-family: inherit; font-weight: inherit; line-height: inherit; }
+    a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; }
+    .address a { color: #8E7584 !important; text-decoration: none !important; }
+  </style>
 </head>
-<body style="margin:0;padding:0;background:#F2E4EC;">
+<body id="body" style="margin:0;padding:0;background:#F2E4EC;">
   <!-- Preheader: shown as the preview line in the inbox, hidden in the email itself -->
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#F2E4EC;">
     The moment is almost yours.&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;
@@ -97,7 +103,7 @@
               <p style="margin:0 0 6px;">
                 <a href="{{UNSUBSCRIBE_URL}}" style="color:#E2C48A;text-decoration:underline;">Unsubscribe</a>
               </p>
-              <p style="margin:0;color:#8E7584;">100 N HOWARD ST #STE R, Spokane, WA, 99201, USA</p>
+              <p class="address" style="margin:0;color:#8E7584;"><span style="color:#8E7584;text-decoration:none;">100&#8203; N HOWARD ST #STE R,&#8203; Spokane,&#8203; WA,&#8203; 99201,&#8203; USA</span></p>
             </td>
           </tr>
 
