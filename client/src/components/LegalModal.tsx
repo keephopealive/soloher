@@ -25,8 +25,8 @@ const LEGAL_DOCS: Record<LegalDoc, { title: string; intro: string; sections: Leg
         body: ['We share information only with service providers that help run SoloHer (payments, shipping, email), or when required by law. We do not sell your personal information.'],
       },
       {
-        heading: 'Your choices',
-        body: ['To access, correct or delete your information, contact us through Contact Us.'],
+        heading: 'Your information',
+        body: ['To update, change or delete any of your account information, log in to your account.'],
       },
     ],
   },
