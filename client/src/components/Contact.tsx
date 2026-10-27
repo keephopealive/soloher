@@ -1,11 +1,12 @@
 import { useState, type FormEvent } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { API_BASE } from '../config'
 
 const TOPICS = ['General question', 'My order', 'My account', 'Press or partnerships']
 
 type Status = 'idle' | 'sending' | 'done' | 'error'
 
-/** Contact section. Posts to /api/contact (Cloudflare Pages Function; not available on GitHub Pages). */
+/** Contact section. Posts to /api/contact (Cloudflare Pages Function; the GitHub Pages build posts to the Cloudflare site). */
 export default function Contact() {
   const ref = useScrollReveal<HTMLDivElement>()
   const [form, setForm] = useState({ name: '', email: '', topic: TOPICS[0], message: '', website: '' })
@@ -21,7 +22,7 @@ export default function Contact() {
     setStatus('sending')
     setError('')
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(`${API_BASE}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
