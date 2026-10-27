@@ -40,7 +40,7 @@ const LEGAL_DOCS: Record<LegalDoc, { title: string; intro: string; sections: Leg
       },
       {
         heading: 'Orders and subscriptions',
-        body: ['Subscriptions renew monthly until you cancel. Cancel before your next billing date to avoid the next charge. One-time gifts are charged once. Prices and items may change.'],
+        body: ['Subscriptions renew monthly until you cancel. Cancel before your next billing date to avoid the next charge. One-time gifts are charged once. Prices and items may change.', 'You are responsible for keeping your payment information up to date, including if your card expires or is cancelled.'],
       },
       {
         heading: 'Shipping, returns and refunds',
