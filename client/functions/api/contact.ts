@@ -1,16 +1,20 @@
 // Cloudflare Pages Function: POST /api/contact  { name, email, topic?, message, website? }
-// Saves a Contact section message to the D1 table contact_messages (see db/contact-schema.sql).
+// Saves a Contact section message to the D1 table contact_messages (see db/contact-schema.sql)
+// and emails it to support@soloherbox.com (server-lib/contact-email.ts).
+import { sendContactEmail } from '../../server-lib/contact-email'
+import type { ResendEnv } from '../../server-lib/resend'
 
 interface D1PreparedStatement {
   bind(...values: unknown[]): D1PreparedStatement
   run(): Promise<unknown>
 }
-interface Env {
+interface Env extends ResendEnv {
   DB: { prepare(query: string): D1PreparedStatement }
 }
 interface Context {
   request: Request
   env: Env
+  waitUntil(promise: Promise<unknown>): void
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
@@ -25,7 +29,7 @@ function json(body: unknown, status = 200) {
 
 const text = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
 
-export async function onRequestPost({ request, env }: Context): Promise<Response> {
+export async function onRequestPost({ request, env, waitUntil }: Context): Promise<Response> {
   let data: Record<string, unknown>
   try {
     data = await request.json()
@@ -52,5 +56,7 @@ export async function onRequestPost({ request, env }: Context): Promise<Response
   } catch {
     return json({ ok: false, error: 'Something went wrong. Please try again.' }, 500)
   }
+  // Notification goes out in the background; the message is already saved either way
+  waitUntil(sendContactEmail(env, { name, email, topic, message }).catch(err => console.error('Contact email error', err)))
   return json({ ok: true })
 }
