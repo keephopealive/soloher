@@ -31,6 +31,8 @@ export default function WaitlistForm({ source, autoFocus, className }: WaitlistF
       const data = await res.json().catch(() => ({}))
       if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.')
       setStatus('done')
+      // Counts the sign-up as a lead in Google Analytics (the tag only exists on the Cloudflare build)
+      window.gtag?.('event', 'generate_lead', { source })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
       setStatus('error')

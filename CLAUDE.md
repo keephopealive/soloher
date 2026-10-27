@@ -64,6 +64,7 @@ Section order: **hero → boxes → story → FAQ → contact → footer**. Test
 - **Gentle scroll snapping** between sections on screens > 900px (`scroll-snap-type: y proximity`). Sections are sized to fit a 1440×900 screen.
 - **Legal popups** (`LegalModal.tsx`): Privacy Policy, Terms of Service, Age Verification from the footer. **Draft text, needs lawyer review.** Main site: short versions, no "last updated" date, no claims about how card data is stored, refund terms match the FAQ.
 - **Branding**: logo from the brand artwork in `client/src/assets/` (`logo-wordmark.webp` navbar, `logo-full.webp` footer/age gate); `public/favicon.png` is the plant mark. On light backgrounds the logo gold is deepened via `--logo-on-light`.
+- **Google Analytics 4**: property for www.soloherbox.com, measurement ID `G-PCEV1D7VVM` in `VITE_GA_ID` (`.env.cloudflare` only). A small plugin in `vite.config.ts` adds the gtag to production builds when it's set, so GitHub Pages and local dev send nothing. Waitlist sign-ups fire a `generate_lead` event (with `source`) from `WaitlistForm.tsx`. No cookie banner yet.
 - **Link previews**: `public/og-image.jpg` (1200×630), title "SoloHer | The Moment Is Yours.".
 
 ### Hero
@@ -127,5 +128,5 @@ Section order: **hero → boxes → story → FAQ → contact → footer**. Test
 - Real checkout and subscription billing (Stripe or a subscription platform); main-site sign-up modal saves nothing.
 - Custom domain (buy/connect in Cloudflare), then update `.env.cloudflare` and email sender.
 - Real reviews and social posts; lawyer review of legal text; alcohol shipping licensing.
-- Analytics / ad pixels before running the planned ~$3k/month paid ads.
+- Ad pixels (Meta/TikTok) before running the planned ~$3k/month paid ads; GA4 is in place.
 - `npm audit` reports dependency vulnerabilities to address.
