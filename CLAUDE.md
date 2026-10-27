@@ -101,7 +101,7 @@ Section order: **hero → boxes → story → FAQ → contact → footer**. Test
 
 ### FAQ, footer
 - FAQ accordion (`FAQ.tsx`), answers are arrays of paragraphs. Main site has the user-approved copy (packaging: no SoloHer branding on the shipping box; story; cancel before next billing date + prepaid refund; curated boxes get a new story, wines and bath bombs monthly; delivery typically 3 to 7 business days once shipped; subscribers can change box options before each billing date; "refund and exchange policy": no refunds or exchanges once shipped, matching the Terms). Presale FAQ still has the old copy. Cancel/change answers assume customer accounts (not built yet);
-- Footer: full logo, Explore (shared nav links minus Contact), Support (Contact Us, Shipping Info, Returns/Exchanges opens the refund FAQ via `openFaq('refunds')`, My Account), Follow (Instagram/TikTok @soloherbox, new tab), legal links.
+- Footer: full logo, Explore (shared nav links minus Contact), Support (Contact Us, Shipping Info opens the delivery FAQ via `openFaq('delivery')`, Returns/Exchanges opens the refund FAQ via `openFaq('refunds')`, My Account), Follow (Instagram/TikTok @soloherbox, new tab), legal links.
 - Support email `support@soloherbox.com` (`SUPPORT_EMAIL` in `FAQ.tsx` and `server-lib/resend.ts`), linked in the refund answer and account popup; alias of marketing@soloherbox.com.
 
 ## Waitlist and unsubscribe (Cloudflare)

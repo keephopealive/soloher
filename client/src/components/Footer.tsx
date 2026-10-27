@@ -33,7 +33,7 @@ export default function Footer({ onOpenLegal, onAccountClick }: FooterProps) {
             <h4>Support</h4>
             <ul>
               <li><a href="#contact" onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}>Contact Us</a></li>
-              <li><a href="#">Shipping Info</a></li>
+              <li><a href="#faq-delivery" onClick={e => { e.preventDefault(); openFaq('delivery') }}>Shipping Info</a></li>
               <li><a href="#faq-refunds" onClick={e => { e.preventDefault(); openFaq('refunds') }}>Returns/Exchanges</a></li>
               <li><a href="#" onClick={e => { e.preventDefault(); onAccountClick() }}>My Account</a></li>
             </ul>
