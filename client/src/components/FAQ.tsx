@@ -40,16 +40,16 @@ const FAQS: { id: string; q: string; a: ReactNode[] }[] = [
   {
     id: 'change-options',
     q: 'Can I change my box options each month?',
-    a: ['Yes. Subscribers can pick a different box or swap their wine and bath bomb before each billing date. Changes apply to your next box.'],
+    a: ['Yes. Subscribers can pick a different box or swap their wine and bath bomb options before each billing date.'],
   },
   {
     id: 'refunds',
-    q: 'What is your refund policy?',
+    q: 'What is your refund and exchange policy?',
     a: [
       <>
-        Once a box has shipped, refunds aren't offered. If there's any issue with your box when it arrives,
-        please reach out to our support team at <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> and
-        we'll work with you to make it right.
+        Unfortunately, SoloHer boxes are neither refundable nor exchangeable once shipped. If there's any issue
+        with your order, please reach out to our support team
+        at <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> for assistance.
       </>,
     ],
   },
