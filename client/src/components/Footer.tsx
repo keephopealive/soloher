@@ -50,7 +50,7 @@ export default function Footer({ onOpenLegal, onAccountClick }: FooterProps) {
       </div>
 
       <div className="footer-bottom">
-        <p className="footer-copy">© {new Date().getFullYear()} SoloHer. All rights reserved.</p>
+        <p className="footer-copy">© {new Date().getFullYear()} SoloHer LLC. All rights reserved.</p>
         <div className="footer-legal">
           <button onClick={() => onOpenLegal('privacy')}>Privacy Policy</button>
           <button onClick={() => onOpenLegal('terms')}>Terms of Service</button>
