@@ -77,13 +77,13 @@ Section order: **hero → boxes → story → FAQ → contact → footer**. Test
 - Three cards in `BoxSelector.tsx`. Rows align across cards via CSS subgrid (`.box-card` spans 10 shared rows; 11 where the pairing customizer is present).
 - **Catalog** (main site, from branch `main-updates`): `client/src/data/products.ts` holds all wines, bath bombs and boxes (recommended pairing per box). Cards, customizer and order modal read from it; add products there only.
 - **Pairing customizer** (main site): "Customize your pairing" on each card opens `PairingCustomizer.tsx` (story locked, wines grouped under Red / White / Rosé headings with a color swatch and matching tile edge (--wine-red/white/rose), bath bombs as tiles, recommended first with a badge, "Reset to recommended"). Card then shows a "Customized" tag, "Edit your pairing" and "Reset to recommended"; the order modal shows and sends the pairing. Defaults chosen for the sample: every box offers all wines / bath bombs, prices unchanged, choice not yet saved per subscriber month.
-- Each card: mood, name, tagline, "Your story" panel, "Paired with" wine + bath bomb (gold SVG line icons, one-line notes).
+- Box lineup from the user's Box sheet (2026-10-27). Each card: mood, name, tagline ("For the woman who..."), "Your story" panel, "Paired with" wine + bath bomb (gold SVG line icons, one-line notes).
 
 | Box | Mood | Story | Wine | Bath bomb |
 |---|---|---|---|---|
-| The Velvet Hour | Tender · Romantic | A slow-burn story of longing and surrender | King Estate Pinot Noir (red), Willamette Valley 2023 | Lavender Rosemary |
-| The Midnight Bloom | Bold · Confident | A story where desire meets its match | Chalk Hill Chardonnay (white) | Oatmeal Milk & Honey |
-| The Crimson Reverie | Deep · Adventurous | A tale of complete surrender and discovery | Whispering Angel Rosé, Château d'Esclans, Côtes de Provence 2025 | Honeysuckle |
+| The Silky Storm | Tender · Sensual | A second-chance romance where the storm clears the air | Whispering Angel Rosé, Château d'Esclans, Côtes de Provence 2025 | Lavender Rosemary |
+| The Hidden Heat | Cozy · Flirtatious | One bad day that leads somewhere unexpectedly sweet | Silverado Sauvignon Blanc (white), Miller Ranch, Yountville 2025 | Oatmeal Milk & Honey |
+| The Midnight Surrender | Forbidden · Deep | Two colleagues, one long night, and a rule gladly broken | Justin Cabernet Sauvignon (red), Paso Robles 2022 | Honeysuckle |
 
 - Inventory the user listed: King Estate Pinot (75), Justin Cabernet (50), Chalk Hill Chardonnay (40), Silverado Sauvignon Blanc (60), Whispering Angel (50), Hampton Water Rosé (35); bath bombs Lavender Rosemary (100), Oatmeal Milk & Honey (100), Honeysuckle (50), Cherry Almond (50). Tasting notes are general style notes, not from the wineries.
 - **Main**: per-card Monthly / One-time gift toggle ("Save $25" badge on Monthly); button "Subscribe · $99.99/mo" or "Gift Once · $124.99"; note "Billed monthly · Cancel anytime" / "One-time charge · No subscription". Clicking opens `Modal.tsx` (name + email); **no real checkout yet**.
