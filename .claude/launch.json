@@ -29,6 +29,17 @@
         "client"
       ],
       "port": 3002
+    },
+    {
+      "name": "soloher-cloudflare",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:cloudflare",
+        "--prefix",
+        "client"
+      ],
+      "port": 8788
     }
   ]
 }

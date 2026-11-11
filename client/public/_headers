@@ -1,0 +1,6 @@
+/listen/*
+  X-Robots-Tag: noindex, nofollow
+/audio/*
+  X-Robots-Tag: noindex, nofollow
+/admin
+  X-Robots-Tag: noindex, nofollow
