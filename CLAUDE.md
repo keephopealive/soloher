@@ -124,7 +124,7 @@ Section order: **hero → boxes → story → FAQ → contact → footer**. Test
 - GitHub Pages can't run functions; email unsubscribe links point to www.soloherbox.com (the Cloudflare site).
 - **Welcome email** (`server-lib/welcome-email.ts`): sent via Resend to new or returning (previously unsubscribed) sign-ups, in the background (`waitUntil`); repeat sign-ups get nothing. Copy and design are imported straight from `mockups/email/waitlist-welcome.html` / `.txt` (edit those; the .txt first line is the subject). From `SoloHer <hello@soloherbox.com>`, reply-to support@soloherbox.com, per-person unsubscribe link + `List-Unsubscribe` headers. Sends nothing until the Pages secret `RESEND_API_KEY` is set (Resend needs soloherbox.com verified via its DNS records at GoDaddy). Logo at https://www.soloherbox.com/email-logo.png (`client/public/`). Mailing address in the footer: 100 N HOWARD ST #STE R, Spokane, WA, 99201, USA. Future marketing sends must skip unsubscribed addresses.
 - **Sign-up notification** (`server-lib/waitlist-notify.ts`, added 2026-11-24): each new or returning sign-up also emails `NOTIFY_EMAIL` (support@soloherbox.com) with the email, form source, the four utm tags and the active list size. Repeat sign-ups send nothing.
-- Test entries `deploy-check@soloher-test.invalid` , `utm-test@soloher-test.invalid` (UTM live test) and `notify-test@soloher-test.invalid` (notification live test, both 2026-11-24) are in the live list (user chose to keep the first).
+- Live list has no test entries (all `@soloher-test.invalid` rows removed 2026-11-24 at the user's request). Remove any future live test sign-ups afterwards.
 
 ## Gotchas learned
 
