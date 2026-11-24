@@ -1,11 +1,14 @@
 // Cloudflare Pages Function: POST /api/waitlist  { email, source?, website?, utm_source?, utm_medium?, utm_campaign?, utm_content? }
 // Saves a waitlist email to the D1 database bound as DB (see wrangler.toml) and sends the
-// welcome email to new sign-ups (server-lib/welcome-email.ts).
+// welcome email to new sign-ups (server-lib/welcome-email.ts), plus a notification to the team
+// (server-lib/waitlist-notify.ts).
 import { sendWelcomeEmail, type WelcomeEnv } from '../../server-lib/welcome-email'
+import { sendWaitlistNotification } from '../../server-lib/waitlist-notify'
 
 interface D1PreparedStatement {
   bind(...values: unknown[]): D1PreparedStatement
   run(): Promise<{ meta: { changes: number } }>
+  first<T>(): Promise<T | null>
 }
 interface Env extends WelcomeEnv {
   DB: { prepare(query: string): D1PreparedStatement }
@@ -64,6 +67,24 @@ export async function onRequestPost({ request, env, waitUntil }: Context): Promi
 
   // Welcome email goes out in the background, only once per subscription
   if (added) waitUntil(sendWelcomeEmail(env, email).catch(err => console.error('Welcome email error', err)))
+
+  // Tell the team about each new (or returning) sign-up, with where they came from
+  if (added) {
+    const [utm_source, utm_medium, utm_campaign, utm_content] = utm
+    waitUntil(
+      (async () => {
+        const count = await env.DB.prepare('SELECT COUNT(*) AS n FROM waitlist WHERE unsubscribed_at IS NULL')
+          .first<{ n: number }>()
+          .catch(() => null)
+        await sendWaitlistNotification(env, {
+          email,
+          source,
+          utm: { utm_source, utm_medium, utm_campaign, utm_content },
+          total: count?.n ?? null,
+        })
+      })().catch(err => console.error('Waitlist notification error', err)),
+    )
+  }
 
   return json({ ok: true })
 }
