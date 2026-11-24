@@ -37,13 +37,13 @@ app.post('/api/subscribe', (req: Request, res: Response) => {
 
 // Local stand-in for the Cloudflare /api/waitlist function (sign-ups are only logged here)
 app.post('/api/waitlist', (req: Request, res: Response) => {
-  const { email, source, website } = req.body as Record<string, string | undefined>
+  const { email, source, website, utm_source, utm_medium, utm_campaign, utm_content } = req.body as Record<string, string | undefined>
   if (website) { res.json({ ok: true }); return }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
     res.status(400).json({ ok: false, error: 'Please enter a valid email address.' })
     return
   }
-  console.log(`[Waitlist] ${email.toLowerCase()} (${source ?? 'unknown'})`)
+  console.log(`[Waitlist] ${email.toLowerCase()} (${source ?? 'unknown'})`, { utm_source, utm_medium, utm_campaign, utm_content })
   res.json({ ok: true })
 })
 

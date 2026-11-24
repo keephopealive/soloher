@@ -1,6 +1,10 @@
 import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
+import { captureUtm } from './utm'
+
+// Remember campaign tags (utm_*) from the arrival link before anything changes the URL
+captureUtm()
 
 // /listen/<slug> shows a story's audio page (what the QR code on the story card opens); everything else is the main site.
 // Each is loaded on its own, so a phone scanning the QR code doesn't download the whole site.

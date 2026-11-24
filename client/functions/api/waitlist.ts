@@ -1,4 +1,4 @@
-// Cloudflare Pages Function: POST /api/waitlist  { email, source?, website? }
+// Cloudflare Pages Function: POST /api/waitlist  { email, source?, website?, utm_source?, utm_medium?, utm_campaign?, utm_content? }
 // Saves a waitlist email to the D1 database bound as DB (see wrangler.toml) and sends the
 // welcome email to new sign-ups (server-lib/welcome-email.ts).
 import { sendWelcomeEmail, type WelcomeEnv } from '../../server-lib/welcome-email'
@@ -26,7 +26,7 @@ function json(body: unknown, status = 200) {
 }
 
 export async function onRequestPost({ request, env, waitUntil }: Context): Promise<Response> {
-  let data: { email?: unknown; source?: unknown; website?: unknown }
+  let data: Record<string, unknown>
   try {
     data = await request.json()
   } catch {
@@ -43,15 +43,19 @@ export async function onRequestPost({ request, env, waitUntil }: Context): Promi
     return json({ ok: false, error: 'Please enter a valid email address.' }, 400)
   }
   const source = typeof data.source === 'string' ? data.source.slice(0, 40) : null
+  // Campaign tags from the link the visitor arrived on, saved as-is (any value, not a fixed list)
+  const tag = (v: unknown) => (typeof v === 'string' && v.trim() !== '' ? v.trim().slice(0, 200) : null)
+  const utm = [data.utm_source, data.utm_medium, data.utm_campaign, data.utm_content].map(tag)
 
   let added: boolean
   try {
     // Signing up twice is fine. Joining again after unsubscribing re-subscribes the address.
     // changes = 1 for a new or returning address, 0 if it was already on the list.
+    // An address already on the list keeps the tags from when it first signed up.
     const result = await env.DB.prepare(
-      'INSERT INTO waitlist (email, source) VALUES (?, ?) ON CONFLICT(email) DO UPDATE SET unsubscribed_at = NULL WHERE unsubscribed_at IS NOT NULL',
+      'INSERT INTO waitlist (email, source, utm_source, utm_medium, utm_campaign, utm_content) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(email) DO UPDATE SET unsubscribed_at = NULL WHERE unsubscribed_at IS NOT NULL',
     )
-      .bind(email, source)
+      .bind(email, source, ...utm)
       .run()
     added = result.meta.changes > 0
   } catch {

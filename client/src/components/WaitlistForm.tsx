@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { getUtm } from '../utm'
 
 interface WaitlistFormProps {
   /** Where the sign-up came from (hero, navbar, a box name); saved with the email */
@@ -26,7 +27,7 @@ export default function WaitlistForm({ source, autoFocus, className }: WaitlistF
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source, website }),
+        body: JSON.stringify({ email, source, website, ...getUtm() }),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.')
