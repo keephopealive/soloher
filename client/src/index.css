@@ -1037,18 +1037,19 @@ h1, h2, h3, h4 {
 /* Gold line from the copy to a dot on the story book */
 .story-callout {
   position: absolute;
-  right: 55%;
-  top: 47%;
+  /* Book sits top-right in the box photo: line starts on the book and runs right */
+  left: 66%;
+  top: 44%;
   width: 360px;
   transform: translateY(-100%);
   padding-bottom: 10px;
   border-bottom: 1px solid var(--gold);
-  text-align: left;
+  text-align: right;
 }
 .story-callout::after {
   content: '';
   position: absolute;
-  right: -5px;
+  left: -5px;
   bottom: -5px;
   width: 9px;
   height: 9px;
@@ -1065,7 +1066,7 @@ h1, h2, h3, h4 {
 .story-callout span {
   display: block;
   max-width: 190px;
-  margin-top: 2px;
+  margin: 2px 0 0 auto;
   font-size: 0.82rem;
   line-height: 1.45;
   color: var(--text-dim);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import WaitlistForm from './WaitlistForm'
 import { WAITLIST_MODE } from '../config'
-import heroBox from '../assets/story-box.webp'
+import heroBox from '../assets/story-box-new.webp'
 
 interface HeroProps {
   onSubscribe: () => void
@@ -78,9 +78,9 @@ export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
         <figure className="hero-visual">
           <img
             src={heroBox}
-            width={950}
-            height={1095}
-            alt="Open SoloHer box with a 375 ml bottle of wine, a lavender bath bomb and a SoloHer story book"
+            width={739}
+            height={935}
+            alt="Open SoloHer box with a bottle of wine, a rose-petal bath bomb and a SoloHer story book"
           />
         </figure>
       </div>

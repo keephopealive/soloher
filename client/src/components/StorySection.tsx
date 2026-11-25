@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import boxOpen from '../assets/story-box.webp'
+import boxOpen from '../assets/story-box-new.webp'
 
 const FEATURES: { key: string; title: ReactNode; detail: string; gold?: boolean }[] = [
   { key: 'story', title: 'Original story', detail: 'exclusive to SoloHer', gold: true },
@@ -27,8 +27,8 @@ export default function StorySection() {
         <figure className="story-visual">
           <img
             src={boxOpen}
-            width={950}
-            height={1095}
+            width={739}
+            height={935}
             alt="Open SoloHer box showing the story book, a bottle of wine and a bath bomb"
             loading="lazy"
           />
