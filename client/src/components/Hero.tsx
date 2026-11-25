@@ -78,8 +78,8 @@ export default function Hero({ onSubscribe, onOneTime }: HeroProps) {
         <figure className="hero-visual">
           <img
             src={heroBox}
-            width={739}
-            height={935}
+            width={895}
+            height={1171}
             alt="Open SoloHer box with a bottle of wine, a rose-petal bath bomb and a SoloHer story book"
           />
         </figure>

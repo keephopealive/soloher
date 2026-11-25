@@ -27,8 +27,8 @@ export default function StorySection() {
         <figure className="story-visual">
           <img
             src={boxOpen}
-            width={739}
-            height={935}
+            width={895}
+            height={1171}
             alt="Open SoloHer box showing the story book, a bottle of wine and a bath bomb"
             loading="lazy"
           />

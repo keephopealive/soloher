@@ -1039,7 +1039,7 @@ h1, h2, h3, h4 {
   position: absolute;
   /* Book sits top-right in the box photo: line starts on the book and runs right */
   left: 66%;
-  top: 44%;
+  top: 41.5%;
   width: 360px;
   transform: translateY(-100%);
   padding-bottom: 10px;
