@@ -69,7 +69,7 @@ Section order: **hero → boxes → story → FAQ → contact → footer**. Test
 
 ### Hero
 - Headline "The ___ Is *Yours.*" with the word rotating Evening → Moment → Time every 3 s (crossfade; respects reduced motion).
-- Product photo: `assets/story-box.webp` (complete open-box cut-out). The user tried and rejected a flat-lay alternative; earlier photo had a clipped corner.
+- Product photo: `assets/story-box.webp`, a top-down open-box cut-out (wine left, story book top right, bath bomb bottom right; transparent background), used in the hero and the story section (replaced the angled photo 2026-11-25). The story section's "Original story" callout points right at the book (`.story-callout` left/top in `index.css`); re-aim it if the photo changes. The user rejected a flat-lay alternative earlier.
 - Main: buttons "Start My Monthly Ritual · $99.99" and "Gift One Ritual · $124.99" scroll to the boxes with Monthly / One-time preselected. Pre-sale: inline waitlist email form.
 - "Discover" cue scrolls to the boxes.
 

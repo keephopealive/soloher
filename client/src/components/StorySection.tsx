@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import boxOpen from '../assets/story-box-new.webp'
+import boxOpen from '../assets/story-box.webp'
 
 const FEATURES: { key: string; title: ReactNode; detail: string; gold?: boolean }[] = [
   { key: 'story', title: 'Original story', detail: 'exclusive to SoloHer', gold: true },

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import WaitlistForm from './WaitlistForm'
 import { WAITLIST_MODE } from '../config'
-import heroBox from '../assets/story-box-new.webp'
+import heroBox from '../assets/story-box.webp'
 
 interface HeroProps {
   onSubscribe: () => void
